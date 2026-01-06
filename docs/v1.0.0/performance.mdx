@@ -1,0 +1,178 @@
+---
+title: Performance & Development
+description: Understand the performance optimizations and development features built into the documentation system
+order: 7
+icon: zap
+---
+
+## Caching System
+
+### In-Memory Caching
+
+The system uses an intelligent caching layer for expensive file system operations:
+
+- **Version list caching**: Cached for 5 seconds in dev, 60 seconds in production
+- **Document list caching**: Per-version caching with automatic invalidation
+- **Individual document caching**: Keyed by version and slug
+
+The cache automatically invalidates when MDX or configuration files change in development mode.
+
+### Cache Statistics
+
+In development mode, cache operations are logged to the console:
+
+```
+✅ [Cache] hit: getAllDocs:v1.0.0
+❌ [Cache] miss: getDocBySlug:v1.0.0:configuration
+⏱️  getDocBySlug(configuration): 45.23ms
+```
+
+## Hot Reload
+
+### Real-Time Updates
+
+The system monitors your `docs/` directory for changes and automatically refreshes the page when you save:
+
+- Watches `.mdx` files for content changes
+- Watches `_category_.json` files for navigation updates
+- Uses Server-Sent Events (SSE) for efficient communication
+- Only active in development mode
+
+### How It Works
+
+1. File watcher monitors the `docs/` directory recursively
+2. When a file changes, the API sends an event to the browser
+3. The browser triggers a soft refresh to reload the content
+4. Cache is invalidated for affected files
+
+## Static Generation
+
+### Optimized Build Process
+
+The build process uses cached data to speed up `generateStaticParams`:
+
+```typescript
+export async function generateStaticParams() {
+  const versions = getCachedVersions()  // Cached
+  const params = []
+
+  for (const version of versions) {
+    const docs = await getCachedAllDocs(version)  // Cached
+    for (const doc of docs) {
+      params.push({
+        version,
+        slug: doc.slug.split("/").filter(Boolean),
+      })
+    }
+  }
+
+  return params
+}
+```
+
+### Performance Tips
+
+For large documentation sites (1000+ files):
+
+1. **Use folder organization**: Organize docs into logical folders to improve cache locality
+2. **Enable draft mode**: Mark work-in-progress docs with `draft: true` to exclude from production builds
+3. **Optimize images**: Use Next.js Image optimization for screenshots and diagrams
+4. **Monitor build times**: Watch the performance logs during development
+
+## Development Mode Features
+
+### Performance Logging
+
+When running `npm run dev`, you'll see detailed performance metrics:
+
+```
+⏱️  getAllDocs(v1.0.0): 234.56ms
+⏱️  getDocBySlug(getting-started): 12.34ms
+💾 Memory Usage: { rss: '156MB', heapTotal: '89MB', heapUsed: '67MB' }
+```
+
+### Debug Utilities
+
+The system includes helpful debugging tools (dev mode only):
+
+- **PerfTimer**: Measure operation duration
+- **logCacheOperation**: Track cache hits/misses
+- **logMemoryUsage**: Monitor memory consumption
+- **debugLog**: Pretty-print complex objects
+
+## Production Optimizations
+
+### Static Site Generation
+
+All documentation pages are pre-rendered at build time:
+
+- Zero server-side rendering overhead
+- Instant page loads
+- Excellent SEO performance
+- CDN-friendly static assets
+
+### Bundle Optimization
+
+- Server Components by default (minimal JavaScript)
+- Client Components only where needed (tabs, theme switcher)
+- Automatic code splitting per route
+- Tree-shaking of unused dependencies
+
+## Monitoring Performance
+
+### Build Analysis
+
+Monitor your build output for performance insights:
+
+```bash
+npm run build
+```
+
+Look for:
+- Static page generation time
+- Number of pages generated
+- Bundle size warnings
+
+### Development Metrics
+
+During development, watch the console for:
+- Cache hit/miss ratios (should improve over time)
+- File operation timings (identify slow operations)
+- Memory usage patterns (detect memory leaks)
+
+## Best Practices
+
+1. **Keep files organized**: Logical folder structure improves caching
+2. **Use frontmatter wisely**: Add only necessary metadata
+3. **Optimize content**: Large files (>1MB) should be split
+4. **Monitor cache**: High miss rates indicate caching issues
+5. **Clean builds**: Occasionally clear `.next/` for fresh builds
+
+## Troubleshooting
+
+### Slow Build Times
+
+If builds are slow:
+
+1. Check for extremely large MDX files (>5MB)
+2. Reduce the number of concurrent pages being generated
+3. Clear cache: Delete `.next/` and `node_modules/.cache/`
+4. Update dependencies to latest versions
+
+### Hot Reload Not Working
+
+If changes aren't reflected:
+
+1. Check that you're in development mode (`npm run dev`)
+2. Look for errors in the browser console
+3. Verify the `/api/mdx-watch` endpoint is responding
+4. Hard refresh the browser (Cmd+Shift+R or Ctrl+Shift+R)
+
+### Memory Issues
+
+If experiencing high memory usage:
+
+1. Check for circular references in documentation
+2. Monitor cache size with `getCacheStats()`
+3. Reduce `CACHE_TTL` in `lib/mdx-cache.ts`
+4. Clear caches manually with `clearAllCaches()`

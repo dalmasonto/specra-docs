@@ -1,0 +1,60 @@
+---
+title: Accordion
+description: Create collapsible content sections with the Accordion and AccordionItem components
+sidebar_position: 1
+---
+
+The Accordion component creates collapsible content sections, perfect for FAQs, expandable menus, or organizing large amounts of content.
+
+## Usage
+
+```mdx
+<Accordion>
+  <AccordionItem title="First Question" defaultOpen>
+    This content is visible by default because of `defaultOpen`.
+  </AccordionItem>
+  
+  <AccordionItem title="Second Question">
+    This content is collapsed by default.
+  </AccordionItem>
+</Accordion>
+```
+
+## Live Example
+
+<Accordion>
+  <AccordionItem title="What is an Accordion?" defaultOpen>
+    An accordion is a UI pattern that allows users to expand and collapse sections of content. It's useful for organizing information in a compact, scannable format.
+  </AccordionItem>
+  
+  <AccordionItem title="When should I use Accordions?">
+    Use accordions when you have multiple sections of content that users may want to browse without scrolling through everything. Common use cases include FAQs, feature lists, and configuration options.
+  </AccordionItem>
+  
+  <AccordionItem title="Can I have multiple items open?">
+    Yes! By default, the Accordion allows multiple items to be open simultaneously. Each AccordionItem operates independently.
+  </AccordionItem>
+</Accordion>
+
+## Props
+
+### Accordion
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | AccordionItem components to render |
+| `type` | `"single" \| "multiple"` | `"multiple"` | Whether one or multiple items can be open |
+
+### AccordionItem
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | required | The clickable header text |
+| `children` | `ReactNode` | required | Content shown when expanded |
+| `defaultOpen` | `boolean` | `false` | Whether the item starts expanded |
+
+## Tips
+
+<Callout type="tip">
+Use the `defaultOpen` prop on the first AccordionItem to give users a preview of the content format.
+</Callout>

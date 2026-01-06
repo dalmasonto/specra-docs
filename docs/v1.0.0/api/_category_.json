@@ -1,0 +1,8 @@
+{
+  "label": "Api",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "icon": "zap",
+  "tab_group": "api"
+}

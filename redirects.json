@@ -1,0 +1,12 @@
+[
+  {
+    "source": "/docs/v1.0.0/api",
+    "destination": "/docs/v1.0.0/api/api-formats",
+    "permanent": false
+  },
+  {
+    "source": "/docs/v1.0.0/components",
+    "destination": "/docs/v1.0.0/components/accordion",
+    "permanent": false
+  }
+]

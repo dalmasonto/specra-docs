@@ -1,0 +1,374 @@
+---
+title: API Documentation
+description: Complete guide to documenting REST APIs in Specra
+icon: book-open
+sidebar_position: 1
+---
+
+Specra provides a powerful yet flexible system for documenting REST APIs. Whether you have 5 endpoints or 500, we've got you covered.
+
+## Two Approaches
+
+### 1. Auto-Generated Documentation
+
+Perfect for large APIs or when you already have specs.
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose my-6">
+  <div className="border border-border rounded-lg p-4">
+    <div className="text-2xl mb-2">📋</div>
+    <h4 className="font-semibold mb-1">Specra Format</h4>
+    <p className="text-sm text-muted-foreground">Simple JSON format</p>
+  </div>
+  <div className="border border-border rounded-lg p-4">
+    <div className="text-2xl mb-2">🔧</div>
+    <h4 className="font-semibold mb-1">OpenAPI 3.x</h4>
+    <p className="text-sm text-muted-foreground">Industry standard</p>
+  </div>
+  <div className="border border-border rounded-lg p-4">
+    <div className="text-2xl mb-2">📮</div>
+    <h4 className="font-semibold mb-1">Postman v2.x</h4>
+    <p className="text-sm text-muted-foreground">Export from Postman</p>
+  </div>
+</div>
+
+Simply create or export your spec file and reference it:
+
+```mdx
+<ApiReference spec="/api-specs/my-api.json" />
+```
+
+The system **auto-detects** the format and generates beautiful, interactive documentation.
+
+**Examples:**
+- [Specra Format (JSONPlaceholder) →](/docs/v1.0.0/api-test)
+- [OpenAPI 3.0 Format →](/docs/v1.0.0/api-openapi)
+- [Postman Collection →](/docs/v1.0.0/api-postman)
+
+[Learn More About Formats →](/docs/v1.0.0/api-formats)
+
+---
+
+### 2. Manual MDX Components
+
+Perfect for small APIs or when you need custom layouts.
+
+Use individual components to craft your documentation:
+
+```mdx
+<ApiEndpoint
+  method="GET"
+  path="/api/users/:id"
+  summary="Get user by ID"
+>
+  <ApiParams params={[...]} />
+  <ApiResponse status={200} example={{...}} />
+  <ApiPlayground method="GET" path="/api/users/123" />
+</ApiEndpoint>
+```
+
+**Example:**
+- [Manual Component Example →](/docs/v1.0.0/api-example)
+
+---
+
+## Quick Start
+
+### Auto-Generated (Recommended)
+
+1. **Create your spec file** (Specra, OpenAPI, or Postman)
+2. **Place it in** `/public/api-specs/my-api.json`
+3. **Add to your MDX**:
+
+```mdx
+---
+title: API Reference
+---
+
+# My API Documentation
+
+<ApiReference spec="/api-specs/my-api.json" />
+```
+
+That's it! You now have:
+- ✅ Auto-generated endpoint documentation
+- ✅ Interactive API playground
+- ✅ Collapsible accordion UI
+- ✅ Syntax-highlighted examples
+- ✅ Request/response schemas
+
+### Manual Components
+
+1. **Create an MDX file** in `docs/`
+2. **Use API components**:
+
+```mdx
+---
+title: API Reference
+---
+
+# My API
+
+<ApiEndpoint method="GET" path="/users" summary="List users">
+  <ApiParams
+    title="Query Parameters"
+    params={[
+      { name: "page", type: "number", description: "Page number" }
+    ]}
+  />
+
+  <ApiResponse
+    status={200}
+    description="Success"
+    example={[{ id: 1, name: "John" }]}
+  />
+
+  <ApiPlayground
+    method="GET"
+    path="/users"
+    baseUrl="https://api.example.com"
+  />
+</ApiEndpoint>
+```
+
+## Available Components
+
+### `<ApiReference>`
+
+Auto-generate docs from spec files.
+
+```tsx
+<ApiReference
+  spec="/api-specs/my-api.json"  // Path to spec file
+  parser="auto"                   // auto | specra | openapi | postman
+  showPlayground={true}           // Show interactive playground
+/>
+```
+
+### `<ApiEndpoint>`
+
+Document a single endpoint (accordion-style).
+
+```tsx
+<ApiEndpoint
+  method="GET"              // GET | POST | PUT | PATCH | DELETE
+  path="/api/users/:id"     // API path
+  summary="Get user by ID"  // Short description
+  defaultOpen={false}       // Start expanded?
+>
+  {/* Child components */}
+</ApiEndpoint>
+```
+
+### `<ApiParams>`
+
+Display parameters (path, query, body).
+
+```tsx
+<ApiParams
+  title="Path Parameters"
+  params={[
+    {
+      name: "id",
+      type: "string",
+      required: true,
+      description: "User ID",
+      example: "user_123"
+    }
+  ]}
+/>
+```
+
+### `<ApiResponse>`
+
+Show response examples.
+
+```tsx
+<ApiResponse
+  status={200}
+  description="User found"
+  example={{
+    id: "user_123",
+    name: "John Doe",
+    email: "john@example.com"
+  }}
+/>
+```
+
+### `<ApiPlayground>`
+
+Interactive API testing.
+
+```tsx
+<ApiPlayground
+  method="GET"
+  path="/users/:id"
+  baseUrl="https://api.example.com"
+  headers={{ "Authorization": "Bearer ..." }}
+  pathParams={[
+    { name: "id", type: "string", example: "user_123" }
+  ]}
+  defaultBody='{"key": "value"}'
+/>
+```
+
+## Features
+
+### Interactive Playground
+
+Every endpoint includes a built-in playground where users can:
+- ✅ Edit path parameters
+- ✅ Modify request headers
+- ✅ Update request body
+- ✅ Send real API requests
+- ✅ View formatted responses
+
+### Accordion UI
+
+Endpoints are collapsible by default, making it easy to:
+- Browse many endpoints quickly
+- Expand only what you need
+- Keep the page clean and organized
+
+### Syntax Highlighting
+
+All code examples include:
+- JSON syntax highlighting
+- Line numbers
+- Copy button
+- Dark mode support
+
+### Authentication
+
+Document your auth requirements:
+- Bearer tokens
+- API keys
+- Basic auth
+- Custom headers
+
+## Format Support
+
+| Format | Version | Use Case |
+|--------|---------|----------|
+| **Specra** | 1.0 | Simple, custom format for any API |
+| **OpenAPI** | 3.x, Swagger 2.0 | Industry standard, code generation |
+| **Postman** | Collection v2.x | Postman users, quick export |
+
+[Compare Formats →](/docs/v1.0.0/api-formats)
+
+## Examples
+
+### Complete API (Auto-Generated)
+
+Using JSONPlaceholder as a real working example:
+
+[View Live Example →](/docs/v1.0.0/api-test)
+
+### OpenAPI Specification
+
+Enterprise-grade API documentation:
+
+[View OpenAPI Example →](/docs/v1.0.0/api-openapi)
+
+### Postman Collection
+
+Exported directly from Postman:
+
+[View Postman Example →](/docs/v1.0.0/api-postman)
+
+### Manual Components
+
+Hand-crafted for custom needs:
+
+[View Manual Example →](/docs/v1.0.0/api-example)
+
+## Best Practices
+
+### 1. Choose the Right Approach
+
+**Use auto-generated** when:
+- You have > 10 endpoints
+- You already have a spec file
+- You want consistency
+- You need code generation
+
+**Use manual components** when:
+- You have < 10 endpoints
+- You need custom layouts
+- You want full control
+- You're documenting gradually
+
+### 2. Provide Examples
+
+Always include realistic examples:
+- Request bodies with actual data
+- Response examples that match reality
+- Edge cases and errors
+- Authentication examples
+
+### 3. Keep It Updated
+
+**For auto-generated docs:**
+- Regenerate specs when code changes
+- Re-export Postman collections regularly
+- Version your spec files
+
+**For manual docs:**
+- Review when API changes
+- Test playground regularly
+- Update examples
+
+### 4. Organize by Feature
+
+Group related endpoints:
+
+```mdx
+## User Management
+
+<ApiReference spec="/api-specs/users.json" />
+
+## Product Catalog
+
+<ApiReference spec="/api-specs/products.json" />
+
+## Orders
+
+<ApiReference spec="/api-specs/orders.json" />
+```
+
+### 5. Add Context
+
+Enhance with explanatory text:
+
+```mdx
+## Authentication
+
+All endpoints require a valid JWT token.
+
+<Callout type="info">
+Get your API key from the [developer dashboard](https://example.com/dashboard).
+</Callout>
+
+<ApiReference spec="/api-specs/my-api.json" />
+```
+
+## Next Steps
+
+Ready to document your API?
+
+1. **Choose your format** - [Compare formats →](/docs/v1.0.0/api-formats)
+2. **See examples** - [View examples →](/docs/v1.0.0/api-test)
+3. **Start building** - Create your first spec file
+4. **Go live** - Deploy your documentation
+
+<Callout type="success" title="Quick Win">
+Have a Postman collection? Export it and you're done in 2 minutes!
+</Callout>
+
+## Resources
+
+- [Supported Formats Guide](/docs/v1.0.0/api-formats)
+- [Specra Format Example](/docs/v1.0.0/api-test)
+- [OpenAPI Example](/docs/v1.0.0/api-openapi)
+- [Postman Example](/docs/v1.0.0/api-postman)
+- [Manual Components Example](/docs/v1.0.0/api-example)
+- [Parser Technical Docs](/API_PARSERS.md)

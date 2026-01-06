@@ -1,0 +1,86 @@
+---
+title: Video
+description: Embed videos from local files, YouTube, or Vimeo
+sidebar_position: 17
+---
+
+The Video component embeds videos from local files or popular platforms like YouTube and Vimeo.
+
+## Usage
+
+### YouTube Video
+
+```mdx
+<Video 
+  src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  caption="Example video"
+/>
+```
+
+### Local Video
+
+```mdx
+<Video 
+  src="/videos/demo.mp4"
+  caption="Product demo"
+  controls
+  poster="/videos/poster.jpg"
+/>
+```
+
+## Live Examples
+
+### YouTube Embed
+
+<Video 
+  src="https://youtu.be/puRFmqfVlLk"
+  caption="YouTube video embed example"
+  muted
+  autoplay
+/>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | required | Video URL (YouTube, Vimeo, or local path) |
+| `caption` | `string` | - | Caption below the video |
+| `autoplay` | `boolean` | `false` | Auto-play video on load |
+| `loop` | `boolean` | `false` | Loop video playback |
+| `muted` | `boolean` | `false` | Mute video audio |
+| `controls` | `boolean` | `true` | Show video controls |
+| `poster` | `string` | - | Poster image URL (local videos only) |
+
+## Supported Platforms
+
+### YouTube
+
+Supports various YouTube URL formats:
+- `https://www.youtube.com/watch?v=VIDEO_ID`
+- `https://youtu.be/VIDEO_ID`
+
+### Vimeo
+
+Supports Vimeo URLs:
+- `https://vimeo.com/VIDEO_ID`
+
+### Local Files
+
+Supports standard video formats:
+- MP4 (`.mp4`)
+- WebM (`.webm`)
+- Ogg (`.ogg`)
+
+## Tips
+
+<Callout type="warning">
+Autoplay is often blocked by browsers unless the video is also muted. For auto-playing videos, use both `autoplay` and `muted`:
+
+```mdx
+<Video src="/videos/animation.mp4" autoplay muted loop />
+```
+</Callout>
+
+<Callout type="tip">
+Use the `poster` prop for local videos to show a preview image before the video loads.
+</Callout>

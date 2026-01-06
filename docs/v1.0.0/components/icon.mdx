@@ -1,0 +1,85 @@
+---
+title: Icons
+description: Display icons from Lucide, Font Awesome, or custom sources
+sidebar_position: 9
+---
+
+The Icon component displays icons from various sources including Lucide icons, Font Awesome, and custom images.
+
+## Usage
+
+```mdx
+<Icon icon="rocket" size={24} color="#3b82f6" />
+```
+
+## Live Examples
+
+### Lucide Icons
+
+<Icon icon="rocket" size={24} /> <Icon icon="star" size={24} /> <Icon icon="heart" size={24} /> <Icon icon="check-circle" size={24} />
+
+### With Colors
+
+<Icon icon="rocket" size={24} color="#3b82f6" /> <Icon icon="star" size={24} color="#f59e0b" /> <Icon icon="heart" size={24} color="#ef4444" /> <Icon icon="check-circle" size={24} color="#10b981" />
+
+### Different Sizes
+
+<Icon icon="settings" size={16} /> <Icon icon="settings" size={20} /> <Icon icon="settings" size={24} /> <Icon icon="settings" size={32} />
+
+### Inline with Text
+
+This task is <Icon icon="check-circle" size={16} color="#10b981" /> complete!
+
+Want to learn more? <Icon icon="arrow-right" size={16} /> Check the docs.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `string \| ReactNode` | required | Icon name, URL, or React node |
+| `iconType` | `string` | `"regular"` | Font Awesome style (if using FA) |
+| `color` | `string` | - | Icon color (CSS color value) |
+| `size` | `number` | `20` | Icon size in pixels |
+| `className` | `string` | - | Additional CSS classes |
+
+## Icon Sources
+
+### Lucide Icons (Default)
+
+Use kebab-case icon names from [Lucide](https://lucide.dev/icons):
+
+```mdx
+<Icon icon="arrow-right" />
+<Icon icon="check-circle" />
+<Icon icon="external-link" />
+```
+
+### Image URLs
+
+Use any image URL or local path:
+
+```mdx
+<Icon icon="/images/logo.svg" size={24} />
+<Icon icon="https://example.com/icon.png" size={24} />
+```
+
+### Font Awesome
+
+Prefix icons with `fa-` to use Font Awesome:
+
+```mdx
+<Icon icon="fa-github" iconType="brands" />
+```
+
+## Common Icons
+
+| Icon | Name | Usage |
+|------|------|-------|
+| <Icon icon="home" size={16} /> | `home` | Home/dashboard |
+| <Icon icon="settings" size={16} /> | `settings` | Configuration |
+| <Icon icon="user" size={16} /> | `user` | User profile |
+| <Icon icon="search" size={16} /> | `search` | Search |
+| <Icon icon="plus" size={16} /> | `plus` | Add new |
+| <Icon icon="x" size={16} /> | `x` | Close |
+| <Icon icon="check" size={16} /> | `check` | Success |
+| <Icon icon="alert-triangle" size={16} /> | `alert-triangle` | Warning |

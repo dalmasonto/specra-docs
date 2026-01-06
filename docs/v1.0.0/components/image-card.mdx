@@ -1,0 +1,107 @@
+---
+title: Image Card
+description: Display images in card format with titles, descriptions, and links
+sidebar_position: 11
+---
+
+Image Cards combine images with text overlays, perfect for galleries, feature showcases, or visual navigation.
+
+## Usage
+
+```mdx
+<ImageCard
+  src="/images/feature.png"
+  alt="Feature screenshot"
+  title="Amazing Feature"
+  description="Description of the feature"
+  href="/docs/v1.0.0/features"
+/>
+```
+
+## Live Examples
+
+### Basic Image Card
+
+<ImageCard
+  src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+  alt="Documentation"
+  title="Documentation System"
+  description="A modern documentation platform"
+/>
+
+### Image Card Grid
+
+Use `ImageCardGrid` to display multiple cards in a responsive grid:
+
+<ImageCardGrid cols={3}>
+  <ImageCard
+    src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+    alt="Feature 1"
+    title="Fast Search"
+    description="Lightning-fast full-text search"
+  />
+  <ImageCard
+    src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+    alt="Feature 2"
+    title="MDX Support"
+    description="Write with React components"
+    href="/docs/v1.0.0/guides/writing-content"
+  />
+  <ImageCard
+    src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+    alt="Feature 3"
+    title="Dark Mode"
+    description="Beautiful dark theme"
+    aspectRatio="square"
+  />
+</ImageCardGrid>
+
+## Aspect Ratios
+
+<Columns cols={{ sm: 1, md: 3 }}>
+  <Column>
+    ### Video (16:9)
+    <ImageCard
+      src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+      alt="Video ratio"
+      aspectRatio="video"
+    />
+  </Column>
+  <Column>
+    ### Square (1:1)
+    <ImageCard
+      src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+      alt="Square ratio"
+      aspectRatio="square"
+    />
+  </Column>
+  <Column>
+    ### Portrait (3:4)
+    <ImageCard
+      src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png"
+      alt="Portrait ratio"
+      aspectRatio="portrait"
+    />
+  </Column>
+</Columns>
+
+## Props
+
+### ImageCard
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | required | Image source URL |
+| `alt` | `string` | required | Accessible alt text |
+| `title` | `string` | - | Card title |
+| `description` | `string` | - | Card description |
+| `href` | `string` | - | Link URL (makes card clickable) |
+| `external` | `boolean` | `false` | Opens link in new tab |
+| `aspectRatio` | `"square" \| "video" \| "portrait"` | `"video"` | Image aspect ratio |
+
+### ImageCardGrid
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | ImageCard components |
+| `cols` | `1 \| 2 \| 3 \| 4` | `3` | Number of columns |

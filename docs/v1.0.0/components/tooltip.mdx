@@ -1,0 +1,78 @@
+---
+title: Tooltip
+description: Display contextual information on hover
+sidebar_position: 16
+---
+
+Tooltips display additional information when hovering over an element.
+
+## Usage
+
+```mdx
+Hover over <Tooltip content="This is a tooltip!">this text</Tooltip> to see more.
+```
+
+## Live Examples
+
+### Basic Tooltip
+
+Hover over <Tooltip content="Additional context appears here">this text</Tooltip> to see a tooltip.
+
+### Different Positions
+
+<Tooltip content="Tooltip on top" position="top">Top</Tooltip> | <Tooltip content="Tooltip on bottom" position="bottom">Bottom</Tooltip> | <Tooltip content="Tooltip on left" position="left">Left</Tooltip> | <Tooltip content="Tooltip on right" position="right">Right</Tooltip>
+
+### With Icons
+
+<Tooltip content="Settings and preferences">
+  <Icon icon="settings" size={20} />
+</Tooltip> <Tooltip content="Get help">
+  <Icon icon="help-circle" size={20} />
+</Tooltip> <Tooltip content="More information">
+  <Icon icon="info" size={20} />
+</Tooltip>
+
+### In Context
+
+This feature is <Badge variant="success">New</Badge>{' '}
+<Tooltip content="Added in version 2.0">
+  <Icon icon="info" size={14} />
+</Tooltip>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | Element that triggers tooltip |
+| `content` | `string` | required | Tooltip text content |
+| `position` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | Tooltip position |
+
+## Best Practices
+
+<Callout type="tip">
+- Keep tooltip content concise (1-2 sentences max)
+- Use for supplementary information, not critical content
+- Ensure the trigger element is focusable for keyboard users
+</Callout>
+
+## Common Patterns
+
+### Help Icons
+
+Add small help icons next to form labels or features:
+
+```mdx
+**Email** <Tooltip content="We'll never share your email">
+  <Icon icon="help-circle" size={14} />
+</Tooltip>
+```
+
+### Abbreviations
+
+Explain abbreviations inline:
+
+```mdx
+The <Tooltip content="Application Programming Interface">API</Tooltip> is well documented.
+```
+
+The <Tooltip content="Application Programming Interface">API</Tooltip> is well documented.

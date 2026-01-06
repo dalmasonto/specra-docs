@@ -1,0 +1,175 @@
+---
+title: Mermaid
+description: Create diagrams and flowcharts using Mermaid syntax
+sidebar_position: 13
+---
+
+The Mermaid component renders diagrams from text using the Mermaid.js library.
+
+## Usage
+
+```mdx
+<Mermaid
+  chart={`
+    graph TD
+      A[Start] --> B{Decision}
+      B -->|Yes| C[Action 1]
+      B -->|No| D[Action 2]
+  `}
+  caption="Decision flowchart"
+/>
+```
+
+## Live Examples
+
+### Flowchart
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+    <Mermaid
+      chart={`
+        graph TD
+          A[Documentation] --> B{Choose Component}
+          B -->|Interactive| C[Accordion]
+          B -->|Layout| D[Columns]
+          B -->|Visual| E[Mermaid]
+          C --> F[Great Docs!]
+          D --> F
+          E --> F
+      `}
+      caption="Component selection flowchart"
+    />
+  </Tab>
+
+  <Tab label="Code">
+```mdx
+<Mermaid
+  chart={`
+    graph TD
+      A[Documentation] --> B{Choose Component}
+      B -->|Interactive| C[Accordion]
+      B -->|Layout| D[Columns]
+      B -->|Visual| E[Mermaid]
+      C --> F[Great Docs!]
+      D --> F
+      E --> F
+  `}
+  caption="Component selection flowchart"
+/>
+```
+  </Tab>
+</Tabs>
+
+### Sequence Diagram
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+    <Mermaid
+      chart={`
+        sequenceDiagram
+          participant User
+          participant Browser
+          participant Server
+          User->>Browser: Click button
+          Browser->>Server: API request
+          Server-->>Browser: Response
+          Browser-->>User: Update UI
+      `}
+      caption="API request sequence"
+    />
+  </Tab>
+
+  <Tab label="Code">
+```mdx
+<Mermaid
+  chart={`
+    sequenceDiagram
+      participant User
+      participant Browser
+      participant Server
+      User->>Browser: Click button
+      Browser->>Server: API request
+      Server-->>Browser: Response
+      Browser-->>User: Update UI
+  `}
+  caption="API request sequence"
+/>
+```
+  </Tab>
+</Tabs>
+
+### Class Diagram
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+    <Mermaid
+      chart={`
+        classDiagram
+          class Document {
+            +string title
+            +string content
+            +Date createdAt
+            +render()
+          }
+          class MDXDocument {
+            +Object frontmatter
+            +compile()
+          }
+          Document <|-- MDXDocument
+      `}
+      caption="Document class hierarchy"
+    />
+  </Tab>
+
+  <Tab label="Code">
+```mdx
+<Mermaid
+  chart={`
+    classDiagram
+      class Document {
+        +string title
+        +string content
+        +Date createdAt
+        +render()
+      }
+      class MDXDocument {
+        +Object frontmatter
+        +compile()
+      }
+      Document <|-- MDXDocument
+  `}
+  caption="Document class hierarchy"
+/>
+```
+  </Tab>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `chart` | `string` | required | Mermaid diagram definition |
+| `caption` | `string` | - | Caption below the diagram |
+
+## Diagram Types
+
+Mermaid supports many diagram types:
+
+- **Flowcharts** - `graph TD` or `graph LR`
+- **Sequence diagrams** - `sequenceDiagram`
+- **Class diagrams** - `classDiagram`
+- **State diagrams** - `stateDiagram-v2`
+- **Entity Relationship** - `erDiagram`
+- **Gantt charts** - `gantt`
+- **Pie charts** - `pie`
+
+## Theme Support
+
+<Callout type="info">
+Mermaid diagrams automatically adapt to light and dark mode themes.
+</Callout>
+
+## Resources
+
+- [Mermaid Documentation](https://mermaid.js.org/intro/)
+- [Live Editor](https://mermaid.live/)

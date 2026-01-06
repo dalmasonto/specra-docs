@@ -1,0 +1,70 @@
+---
+title: Postman Format Example
+description: Auto-generated API docs from Postman Collection v2.1
+icon: box
+sidebar_position: 5
+---
+
+This page demonstrates automatic API documentation generation from a **Postman Collection v2.1**.
+
+Export your Postman collection and drop it in - the documentation is generated automatically!
+
+<Callout type="success" title="Works with Postman!">
+Simply export your collection from Postman (v2.0 or v2.1) and reference it here. No conversion needed!
+</Callout>
+
+---
+
+<ApiReference spec="/api-specs/postman-example.json" />
+
+---
+
+## About This Example
+
+This example shows how the parser handles:
+
+- ✅ **Postman Collection v2.x** format detection
+- ✅ **Folder organization** (nested items flattened)
+- ✅ **Environment variables** (`{{baseUrl}}` interpolation)
+- ✅ **Path parameters** (`:id` syntax preserved)
+- ✅ **Query parameters** with descriptions
+- ✅ **Request bodies** (raw, form-data, urlencoded)
+- ✅ **Response examples** from saved responses
+- ✅ **Authentication** (Bearer, API Key, Basic)
+
+## How to Use Your Postman Collection
+
+### Step 1: Export from Postman
+
+1. Open your collection in Postman
+2. Click the **three dots** (•••) menu
+3. Select **Export**
+4. Choose **Collection v2.1** (recommended)
+5. Save the JSON file
+
+### Step 2: Add to Your Docs
+
+1. **Place the file** in `/public/api-specs/`
+2. **Reference it** in your MDX:
+
+```mdx
+<ApiReference spec="/api-specs/my-collection.json" parser="postman" />
+```
+
+Or use auto-detection:
+
+```mdx
+<ApiReference spec="/api-specs/my-collection.json" />
+```
+
+### Step 3: Enjoy!
+
+Your entire Postman collection is now beautifully documented with:
+- Interactive playground for testing
+- Automatic parameter extraction
+- Response examples
+- Authentication info
+
+<Callout type="tip" title="Pro Tip">
+Keep your Postman collection up-to-date and simply re-export it to update your documentation!
+</Callout>

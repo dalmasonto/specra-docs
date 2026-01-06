@@ -1,0 +1,262 @@
+---
+title: Manual Components
+description: Hand-crafted API docs using individual MDX components
+icon: code
+sidebar_position: 6
+---
+
+This page demonstrates how to document your REST API endpoints using Specra's API components.
+
+## Get User
+
+<ApiEndpoint
+  method="GET"
+  path="/api/users/:id"
+  summary="Retrieve a single user by ID"
+>
+
+### Path Parameters
+
+<ApiParams
+  title="Path Parameters"
+  params={[
+    {
+      name: "id",
+      type: "string",
+      required: true,
+      description: "The unique identifier of the user"
+    }
+  ]}
+/>
+
+### Query Parameters
+
+<ApiParams
+  title="Query Parameters"
+  params={[
+    {
+      name: "fields",
+      type: "string",
+      description: "Comma-separated list of fields to include in the response",
+      default: "all"
+    },
+    {
+      name: "include_metadata",
+      type: "boolean",
+      description: "Whether to include user metadata",
+      default: "false"
+    }
+  ]}
+/>
+
+### Responses
+
+<ApiResponse
+  status={200}
+  description="Success"
+  example={{
+    "id": "user_123",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "created_at": "2024-01-15T10:30:00Z"
+  }}
+/>
+
+<ApiResponse
+  status={404}
+  description="User not found"
+  example={{
+    "error": "User not found",
+    "code": "USER_NOT_FOUND"
+  }}
+/>
+
+### Try it out
+
+<ApiPlayground
+  method="GET"
+  path="/api/users/user_123"
+  baseUrl="https://api.example.com"
+/>
+
+</ApiEndpoint>
+
+## Create User
+
+<ApiEndpoint
+  method="POST"
+  path="/api/users"
+  summary="Create a new user account"
+>
+
+### Request Body
+
+<ApiParams
+  title="Body Parameters"
+  params={[
+    {
+      name: "name",
+      type: "string",
+      required: true,
+      description: "Full name of the user"
+    },
+    {
+      name: "email",
+      type: "string",
+      required: true,
+      description: "Email address (must be unique)"
+    },
+    {
+      name: "role",
+      type: "string",
+      description: "User role",
+      default: "user"
+    }
+  ]}
+/>
+
+### Responses
+
+<ApiResponse
+  status={201}
+  description="User created successfully"
+  example={{
+    "id": "user_124",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "role": "user",
+    "created_at": "2024-01-15T11:00:00Z"
+  }}
+/>
+
+<ApiResponse
+  status={400}
+  description="Validation error"
+  example={{
+    "error": "Invalid request body",
+    "details": {
+      "email": "Email already exists"
+    }
+  }}
+/>
+
+### Try it out
+
+<ApiPlayground
+  method="POST"
+  path="/api/users"
+  baseUrl="https://api.example.com"
+  defaultBody={JSON.stringify({
+    name: "Jane Smith",
+    email: "jane@example.com",
+    role: "user"
+  }, null, 2)}
+/>
+
+</ApiEndpoint>
+
+## Update User
+
+<ApiEndpoint
+  method="PATCH"
+  path="/api/users/:id"
+  summary="Update user information"
+>
+
+### Path Parameters
+
+<ApiParams
+  params={[
+    {
+      name: "id",
+      type: "string",
+      required: true,
+      description: "The unique identifier of the user"
+    }
+  ]}
+/>
+
+### Request Body
+
+<ApiParams
+  title="Body Parameters"
+  params={[
+    {
+      name: "name",
+      type: "string",
+      description: "Updated name"
+    },
+    {
+      name: "email",
+      type: "string",
+      description: "Updated email address"
+    },
+    {
+      name: "role",
+      type: "string",
+      description: "Updated role"
+    }
+  ]}
+/>
+
+### Responses
+
+<ApiResponse
+  status={200}
+  description="User updated successfully"
+  example={{
+    "id": "user_123",
+    "name": "John Updated",
+    "email": "john.updated@example.com",
+    "role": "admin",
+    "updated_at": "2024-01-15T12:00:00Z"
+  }}
+/>
+
+</ApiEndpoint>
+
+## Delete User
+
+<ApiEndpoint
+  method="DELETE"
+  path="/api/users/:id"
+  summary="Delete a user account"
+>
+
+### Path Parameters
+
+<ApiParams
+  params={[
+    {
+      name: "id",
+      type: "string",
+      required: true,
+      description: "The unique identifier of the user to delete"
+    }
+  ]}
+/>
+
+### Responses
+
+<ApiResponse
+  status={204}
+  description="User deleted successfully"
+/>
+
+<ApiResponse
+  status={404}
+  description="User not found"
+/>
+
+</ApiEndpoint>
+
+## Authentication
+
+All API requests require authentication using a Bearer token:
+
+```bash
+curl -H "Authorization: Bearer your_api_key" \
+  https://api.example.com/api/users/user_123
+```
+
+Get your API key from the [developer dashboard](https://example.com/dashboard).

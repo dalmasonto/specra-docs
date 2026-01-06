@@ -1,0 +1,84 @@
+---
+title: Math
+description: Render mathematical equations using KaTeX
+sidebar_position: 12
+---
+
+The Math component renders mathematical equations using KaTeX, supporting both inline and block math.
+
+## Usage
+
+### Inline Math
+
+```mdx
+The equation <Math>{"E = mc^2"}</Math> is famous.
+```
+
+### Block Math
+
+```mdx
+<Math block>
+  {"\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}"}
+</Math>
+```
+
+## Live Examples
+
+### Inline Math
+
+Einstein's famous equation <Math>{"E = mc^2"}</Math> relates energy and mass.
+
+The quadratic formula is <Math>{"x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}"}</Math>.
+
+### Block Math
+
+<Math block>
+  {"\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}"}
+</Math>
+
+<Math block>
+  {"f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}"}
+</Math>
+
+### Matrix
+
+<Math block>
+  {"\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}"}
+</Math>
+
+### Summation
+
+<Math block>
+  {"\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}"}
+</Math>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `string` | required | LaTeX math expression |
+| `block` | `boolean` | `false` | Display as block (centered) |
+
+## LaTeX Syntax
+
+<Callout type="tip">
+Remember to escape backslashes in JSX. Use `\\` instead of `\` for LaTeX commands.
+</Callout>
+
+### Common Symbols
+
+| Symbol | LaTeX | Result |
+|--------|-------|--------|
+| Greek letters | `\alpha, \beta, \gamma` | <Math>{"\\alpha, \\beta, \\gamma"}</Math> |
+| Fractions | `\frac{a}{b}` | <Math>{"\\frac{a}{b}"}</Math> |
+| Square root | `\sqrt{x}` | <Math>{"\\sqrt{x}"}</Math> |
+| Exponents | `x^{n}` | <Math>{"x^{n}"}</Math> |
+| Subscripts | `x_{i}` | <Math>{"x_{i}"}</Math> |
+| Infinity | `\infty` | <Math>{"\\infty"}</Math> |
+| Sum | `\sum` | <Math>{"\\sum"}</Math> |
+| Integral | `\int` | <Math>{"\\int"}</Math> |
+
+## Resources
+
+- [KaTeX Documentation](https://katex.org/docs/supported.html)
+- [LaTeX Math Symbols](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols)

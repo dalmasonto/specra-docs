@@ -1,0 +1,65 @@
+---
+title: Badge
+description: Display status indicators and labels with styled badges
+sidebar_position: 2
+---
+
+Badges are small status indicators that highlight important information, categories, or statuses.
+
+## Usage
+
+```mdx
+<Badge>Default</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="error">Error</Badge>
+<Badge variant="info">Info</Badge>
+```
+
+## Live Example
+
+<Badge>Default</Badge> <Badge variant="success">Success</Badge> <Badge variant="warning">Warning</Badge> <Badge variant="error">Error</Badge> <Badge variant="info">Info</Badge>
+
+## Variants
+
+### Default
+<Badge>Default Badge</Badge>
+
+Used for neutral information or general labels.
+
+### Success
+<Badge variant="success">Completed</Badge>
+
+Indicates successful operations, active status, or positive outcomes.
+
+### Warning
+<Badge variant="warning">Pending</Badge>
+
+Highlights items that need attention or are in a transitional state.
+
+### Error
+<Badge variant="error">Failed</Badge>
+
+Shows errors, critical issues, or negative status.
+
+### Info
+<Badge variant="info">New</Badge>
+
+Provides informational context or highlights new features.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | Badge text content |
+| `variant` | `"default" \| "success" \| "warning" \| "error" \| "info"` | `"default"` | Color variant |
+
+## Common Patterns
+
+Use badges inline with text to indicate status:
+
+```mdx
+This feature is <Badge variant="success">Stable</Badge> and ready for production.
+```
+
+This feature is <Badge variant="success">Stable</Badge> and ready for production.

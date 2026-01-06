@@ -1,0 +1,81 @@
+---
+title: Specra Format Example
+description: Live API example using Specra format with JSONPlaceholder
+tab_group: api
+icon: file-json
+sidebar_position: 3
+---
+
+This page demonstrates the `<ApiReference>` component using a real public API ([JSONPlaceholder](https://jsonplaceholder.typicode.com/)).
+
+All endpoints below are **fully functional** and can be tested using the interactive playground!
+
+<Callout type="info">
+This API is free and requires no authentication. Perfect for testing!
+</Callout>
+
+---
+
+<ApiReference spec="/api-specs/test-api.json" showPlayground={true} />
+
+---
+
+## Try It Yourself
+
+1. **Expand any endpoint** by clicking on it
+2. **Scroll to the playground** at the bottom of each endpoint
+3. **Click "Send Request"** to test the API live
+4. **View the response** in the JSON viewer
+
+## About JSONPlaceholder
+
+[JSONPlaceholder](https://jsonplaceholder.typicode.com/) is a free fake REST API for testing and prototyping. It's perfect for:
+
+- Testing API documentation tools (like this!)
+- Frontend development
+- Learning HTTP methods
+- Prototyping applications
+
+<Callout type="success" title="Pro Tip">
+Try modifying the request body in the POST/PUT/PATCH endpoints and see the response change!
+</Callout>
+
+## Example Integration
+
+Here's how you might use this API in a real application:
+
+```javascript
+// Fetch all posts
+async function getPosts() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+  const posts = await response.json();
+  return posts;
+}
+
+// Create a new post
+async function createPost(title, body) {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      title,
+      body,
+      userId: 1
+    })
+  });
+  return await response.json();
+}
+
+// Usage
+const posts = await getPosts();
+console.log(posts);
+
+const newPost = await createPost('My Title', 'My Content');
+console.log(newPost);
+```
+
+## Next Steps
+
+- Check out the [manual API documentation example](/docs/v1.0.0/api-example)
+- Learn about [creating your own API spec](/docs/v1.0.0/api-auto-generated)
+- Read the full [API Documentation Guide](/API_DOCUMENTATION.md)

@@ -1,0 +1,285 @@
+---
+title: Tab Groups
+description: Organize your documentation into tabs for better navigation and structure
+icon: notebook-tabs
+tab_group: guides
+---
+
+Tab groups allow you to organize your documentation into different sections accessible through tabs at the top of your documentation pages. This is particularly useful for separating different types of content like SDK docs, API references, and guides.
+
+## Overview
+
+Tab groups provide a sticky navigation bar that:
+- Sits below the header
+- Filters sidebar content based on the active tab
+- Persists across page navigation
+- Supports icons from Lucide React
+- Maintains auto-generated sidebar structure
+
+## Configuration
+
+Define tab groups in your `specra.config.json`:
+
+```json
+{
+  "navigation": {
+    "tabGroups": [
+      {
+        "id": "sdk",
+        "label": "SDK Documentation",
+        "icon": "code"
+      },
+      {
+        "id": "api",
+        "label": "API Reference",
+        "icon": "zap"
+      },
+      {
+        "id": "guides",
+        "label": "Guides",
+        "icon": "book-open"
+      }
+    ]
+  }
+}
+```
+
+### Tab Group Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `id` | string | Yes | Unique identifier for the tab group |
+| `label` | string | Yes | Display text for the tab |
+| `icon` | string | No | Lucide icon name (e.g., "code", "zap", "book-open") |
+
+## Assigning Content to Tabs
+
+There are two ways to assign content to tab groups:
+
+### 1. File-Level Assignment
+
+Add `tab_group` to the frontmatter of your MDX files:
+
+```mdx
+---
+title: Getting Started
+description: Quick start guide
+tab_group: guides
+---
+
+# Getting Started
+
+Your content here...
+```
+
+### 2. Folder-Level Assignment
+
+Add `tab_group` to your `_category_.json` file to assign all files in that folder:
+
+```json
+{
+  "label": "Components",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "icon": "grid",
+  "tab_group": "sdk"
+}
+```
+
+All files within this folder will automatically inherit the `sdk` tab group.
+
+## Behavior and Rules
+
+### Default Tab Assignment
+
+Files without a `tab_group` specified will automatically appear in the **first tab group** defined in your config.
+
+### Precedence
+
+File-level `tab_group` in frontmatter takes precedence over folder-level assignment from `_category_.json`.
+
+### Tab Persistence
+
+The active tab persists when:
+- Navigating between pages within the same tab group
+- Manually switching tabs
+- Clicking links to pages in different tab groups (tab switches automatically)
+
+### Initial Tab Selection
+
+When you land on a page:
+- The tab automatically switches to match the page's tab group
+- On page reload, the tab reflects the current page's group
+- Manual tab selection is preserved when navigating within the same group
+
+## Best Practices
+
+### 1. Logical Grouping
+
+Group related content together:
+- **SDK/Library docs**: Installation, configuration, API reference
+- **API docs**: REST endpoints, GraphQL schemas, webhooks
+- **Guides**: Tutorials, how-tos, best practices
+
+### 2. Consistent Naming
+
+Use clear, concise labels:
+- ✅ "SDK Documentation", "API Reference", "Guides"
+- ❌ "Docs1", "Section A", "Misc"
+
+### 3. Meaningful Icons
+
+Choose icons that represent the content:
+- `code` for SDK/library documentation
+- `zap` for API references
+- `book-open` for guides and tutorials
+- `rocket` for getting started content
+
+### 4. Limit Tab Count
+
+Keep the number of tabs manageable:
+- **Recommended**: 2-4 tabs
+- **Maximum**: 5-6 tabs
+- Too many tabs can overwhelm users
+
+## Examples
+
+### Example 1: Simple SDK + API Split
+
+```json
+{
+  "navigation": {
+    "tabGroups": [
+      {
+        "id": "sdk",
+        "label": "SDK",
+        "icon": "code"
+      },
+      {
+        "id": "api",
+        "label": "API",
+        "icon": "zap"
+      }
+    ]
+  }
+}
+```
+
+### Example 2: Comprehensive Documentation
+
+```json
+{
+  "navigation": {
+    "tabGroups": [
+      {
+        "id": "getting-started",
+        "label": "Getting Started",
+        "icon": "rocket"
+      },
+      {
+        "id": "sdk",
+        "label": "SDK Reference",
+        "icon": "code"
+      },
+      {
+        "id": "api",
+        "label": "API Reference",
+        "icon": "server"
+      },
+      {
+        "id": "guides",
+        "label": "Guides",
+        "icon": "book-open"
+      }
+    ]
+  }
+}
+```
+
+## Advanced Usage
+
+### Nested Folders
+
+Tab groups work seamlessly with nested folder structures:
+
+```txt
+docs/v1.0.0/
+├── components/              # tab_group: sdk
+│   ├── _category_.json
+│   ├── button.mdx
+│   └── input.mdx
+├── api/                     # tab_group: api
+│   ├── _category_.json
+│   ├── authentication.mdx
+│   └── endpoints.mdx
+└── guides/                  # tab_group: guides
+    ├── _category_.json
+    └── quickstart.mdx       # Can override with file-level tab_group
+```
+
+### Mixed Tab Groups in Same Folder
+
+You can have files in the same folder belong to different tabs:
+
+```txt
+docs/v1.0.0/
+├── _category_.json          # Default: tab_group: sdk
+├── overview.mdx             # Inherits: sdk
+├── api-overview.mdx         # Override: tab_group: api
+└── tutorial.mdx             # Override: tab_group: guides
+```
+
+## Troubleshooting
+
+### Tab Not Showing
+
+**Problem**: Tab group defined but not visible
+
+**Solutions**:
+- Ensure at least one file is assigned to that tab group
+- Check that the tab group `id` matches exactly in both config and frontmatter
+- Verify `navigation.tabGroups` is defined in `specra.config.json`
+
+### Content Appearing in Wrong Tab
+
+**Problem**: Page shows up under incorrect tab
+
+**Solutions**:
+- Check file-level frontmatter for `tab_group` override
+- Verify folder-level `_category_.json` has correct `tab_group`
+- Remember: frontmatter takes precedence over `_category_.json`
+
+### Tab Not Persisting
+
+**Problem**: Tab resets when navigating
+
+**Solutions**:
+- This is expected behavior when navigating to a page in a different tab group
+- The tab automatically switches to match the current page's group
+- Manual selection persists only when navigating within the same tab group
+
+## Comparison with Alternatives
+
+### vs. Mintlify/Docusaurus
+
+Unlike Mintlify and Docusaurus which require manual sidebar configuration, our tab groups:
+- ✅ Auto-generate sidebar structure from folder hierarchy
+- ✅ Support both file and folder-level assignments
+- ✅ Persist tab state across navigation
+- ✅ Automatically filter sidebar content
+- ✅ Require minimal configuration
+
+### Advantages
+
+1. **Auto-generation**: No need to manually maintain sidebar structure
+2. **Flexibility**: File-level overrides for granular control
+3. **Persistence**: Smart tab state management
+4. **Icons**: Built-in icon support from Lucide React
+5. **Sticky Navigation**: Tabs stay visible while scrolling
+
+## Related
+
+- [Sidebar Configuration](/docs/v1.0.0/sidebar-configuration)
+- [Navigation Settings](/docs/v1.0.0/configuration)
+- [Folder Structure](/docs/v1.0.0/folder-structure)

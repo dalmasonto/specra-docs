@@ -1,0 +1,73 @@
+---
+title: Image
+description: Display optimized images with captions and zoom functionality
+sidebar_position: 10
+---
+
+The Image component displays optimized images with optional captions and zoom-on-click functionality.
+
+## Usage
+
+```mdx
+<Image 
+  src="/images/screenshot.png" 
+  alt="Application screenshot"
+  caption="Dashboard overview"
+/>
+```
+
+## Live Example
+
+<Image 
+  src="https://www.kindpng.com/picc/m/160-1609318_document-management-system-png-transparent-png.png" 
+  alt="Documentation system illustration"
+  caption="Modern documentation platform"
+  width={600}
+  height={400}
+/>
+
+<Image 
+  src="/placeholder.svg" 
+  alt="Placeholder Image"
+  caption="Local placeholder image"
+  width={600}
+  height={400}
+/>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | required | Image source URL |
+| `alt` | `string` | required | Accessible alt text |
+| `caption` | `string` | - | Caption displayed below image |
+| `width` | `number` | `1200` | Image width |
+| `height` | `number` | `675` | Image height |
+| `zoom` | `boolean` | `true` | Enable click-to-zoom |
+
+## Features
+
+### Zoom Functionality
+
+<Callout type="info">
+Click on any image to view it in a full-screen lightbox. A zoom icon appears on hover.
+</Callout>
+
+### Captions
+
+Add context to images with the `caption` prop. Captions are styled italicized and centered below the image.
+
+### Optimization
+
+Images are automatically optimized using Next.js Image component for:
+- Lazy loading
+- Responsive sizing
+- Modern formats (WebP)
+- Caching
+
+## Best Practices
+
+- Always provide descriptive `alt` text for accessibility
+- Use appropriate `width` and `height` to prevent layout shift
+- Add `caption` for complex diagrams or screenshots that need explanation
+- Set `zoom={false}` for decorative or small images

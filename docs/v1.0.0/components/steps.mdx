@@ -1,0 +1,88 @@
+---
+title: Steps
+description: Create step-by-step instructions and tutorials
+sidebar_position: 14
+---
+
+The Steps component creates numbered step-by-step instructions, perfect for tutorials and guides.
+
+## Usage
+
+```mdx
+<Steps>
+  <Step title="First Step">
+    Description of the first step.
+  </Step>
+  
+  <Step title="Second Step">
+    Description of the second step.
+  </Step>
+</Steps>
+```
+
+## Live Example
+
+<Steps>
+  <Step title="Install Dependencies">
+    First, install the required npm packages:
+    
+```bash
+npm install next react react-dom
+```
+  </Step>
+  
+  <Step title="Create Configuration">
+    Create a configuration file in your project root:
+    
+```javascript
+// next.config.js
+module.exports = {
+  reactStrictMode: true,
+}
+```
+  </Step>
+  
+  <Step title="Start Development Server">
+    Run the development server:
+    
+```bash
+npm run dev
+```
+    
+Your site is now running at `http://localhost:3000`!
+  </Step>
+  
+  <Step title="Deploy to Production">
+    When ready, build and deploy your application:
+    
+```bash
+npm run build
+npm start
+```
+  </Step>
+</Steps>
+
+## Props
+
+### Steps
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | Step components |
+
+### Step
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | required | Step title/heading |
+| `children` | `ReactNode` | required | Step content |
+
+## Features
+
+- **Automatic Numbering** - Steps are numbered automatically using CSS counters
+- **Visual Timeline** - A connecting line shows the progression through steps
+- **Rich Content** - Each step supports full MDX content including code blocks
+
+<Callout type="tip">
+Steps work great for installation guides, tutorials, and any sequential process that users need to follow.
+</Callout>

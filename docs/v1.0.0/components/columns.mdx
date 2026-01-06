@@ -1,0 +1,87 @@
+---
+title: Columns
+description: Create responsive multi-column layouts for your content
+sidebar_position: 7
+---
+
+The Columns component creates responsive grid layouts for organizing content side-by-side.
+
+## Usage
+
+```mdx
+<Columns cols={{ sm: 1, md: 2, lg: 3 }}>
+  <Column>First column content</Column>
+  <Column>Second column content</Column>
+  <Column>Third column content</Column>
+</Columns>
+```
+
+## Live Examples
+
+### Two Columns
+
+<Columns cols={{ sm: 1, md: 2 }}>
+  <Column>
+    ### Left Column
+    This content appears on the left side (or stacks on mobile).
+  </Column>
+  <Column>
+    ### Right Column
+    This content appears on the right side.
+  </Column>
+</Columns>
+
+### Three Columns
+
+<Columns cols={{ sm: 1, md: 2, lg: 3 }}>
+  <Column>
+    <Card title="Feature 1" description="First feature description" />
+  </Column>
+  <Column>
+    <Card title="Feature 2" description="Second feature description" />
+  </Column>
+  <Column>
+    <Card title="Feature 3" description="Third feature description" />
+  </Column>
+</Columns>
+
+### Column Spanning
+
+Use the `span` prop to make columns take up more space:
+
+<Columns cols={{ sm: 1, md: 3 }}>
+  <Column span={2}>
+    ### Wide Column
+    This column spans 2 of 3 columns for more prominent content.
+  </Column>
+  <Column>
+    ### Narrow
+    Single column width.
+  </Column>
+</Columns>
+
+## Props
+
+### Columns
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | Column components |
+| `cols` | `object` | `{ sm: 1, md: 2, lg: 3 }` | Columns at each breakpoint |
+| `cols.sm` | `1-4` | `1` | Columns on small screens |
+| `cols.md` | `1-4` | `2` | Columns on medium screens |
+| `cols.lg` | `1-4` | `3` | Columns on large screens |
+| `cols.xl` | `1-4` | - | Columns on extra-large screens |
+
+### Column
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | required | Column content |
+| `span` | `1 \| 2 \| 3 \| 4` | `1` | Number of columns to span |
+
+## Responsive Behavior
+
+<Callout type="tip">
+Columns automatically stack on mobile devices. The `sm`, `md`, `lg`, and `xl` breakpoints let you control how content reflows at different screen sizes.
+</Callout>
