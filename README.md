@@ -149,25 +149,26 @@ Deploy your Specra documentation site to Vercel, Netlify, GitHub Pages, or any h
 
 To deploy as a static site to GitHub Pages:
 
-1. Update your `next.config.js` to enable static export:
+1. Update your `specra.config.json`:
 
-```js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
-  basePath: process.env.NODE_ENV === 'production' ? '/your-repo-name' : '',
+```json
+{
+  "deployment": {
+    "target": "github",
+    "basePath": "/your-repo-name",
+    "customDomain": false
+  }
 }
-
-module.exports = nextConfig
 ```
+
+**Note on `basePath`:**
+- **With custom domain** (`docs.yoursite.com`): Set `customDomain: true` and leave `basePath` empty (`""`)
+- **Without custom domain** (`yourusername.github.io/repo-name`): Set `basePath` to your repo name (`"/your-repo-name"`)
 
 2. Build and export your site:
 
 ```bash
-npm run build
+npm run build:export
 ```
 
 3. Deploy the `out` directory to GitHub Pages:
@@ -217,7 +218,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build:export
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
