@@ -1,0 +1,488 @@
+---
+title: Site Configuration
+description: Configure your site metadata, branding, and basic settings
+sidebar_position: 2
+icon: globe
+tab_group: guides
+---
+
+# Site Configuration
+
+The `site` section in `specra.config.json` controls your documentation site's identity, branding, and basic metadata. This is where you define your site's title, description, logo, and other fundamental properties.
+
+## Basic Configuration
+
+Here's a minimal site configuration:
+
+```json
+{
+  "site": {
+    "title": "My Documentation",
+    "description": "Comprehensive documentation for my project",
+    "url": "https://docs.example.com"
+  }
+}
+```
+
+That's all you need to get started. Specra fills in sensible defaults for everything else.
+
+## All Site Options
+
+### Required Fields
+
+Only one field is truly required:
+
+```json
+{
+  "site": {
+    "title": "My Documentation"
+  }
+}
+```
+
+Everything else is optional but recommended for a professional docs site.
+
+### Complete Configuration
+
+Here's every available option:
+
+```json
+{
+  "site": {
+    "title": "Specra Documentation",
+    "description": "Build beautiful documentation with Specra",
+    "url": "https://docs.example.com",
+    "baseUrl": "/",
+    "language": "en",
+    "organizationName": "My Company",
+    "projectName": "specra",
+    "activeVersion": "v1.0.0",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.ico",
+    "hideTitle": false,
+    "hideLogo": false
+  }
+}
+```
+
+## Configuration Reference
+
+### title
+
+**Type:** `string` (Required)
+
+The name of your documentation site. Appears in the browser tab, navigation header, and social media previews.
+
+```json
+{
+  "site": {
+    "title": "Specra Docs"
+  }
+}
+```
+
+<Callout type="tip">
+Keep it short and clear. This appears in many places, including browser tabs where space is limited.
+</Callout>
+
+### description
+
+**Type:** `string`
+
+Brief description of your documentation. Used in SEO meta tags and social media previews.
+
+```json
+{
+  "site": {
+    "description": "Complete guide to building documentation with Specra"
+  }
+}
+```
+
+**Best practices:**
+- Keep it under 160 characters
+- Include relevant keywords
+- Be descriptive and specific
+- Focus on what users will learn
+
+### url
+
+**Type:** `string`
+
+The full URL where your documentation is hosted. Used for generating canonical URLs and social media previews.
+
+```json
+{
+  "site": {
+    "url": "https://docs.example.com"
+  }
+}
+```
+
+<Callout type="warning">
+Include the protocol (`https://`) but no trailing slash.
+</Callout>
+
+### baseUrl
+
+**Type:** `string`
+**Default:** `"/"`
+
+Base path for your site. Usually only needed for GitHub Pages without a custom domain.
+
+```json
+{
+  "site": {
+    "baseUrl": "/"
+  }
+}
+```
+
+For GitHub Pages at `username.github.io/repo-name`:
+
+```json
+{
+  "site": {
+    "baseUrl": "/repo-name/"
+  }
+}
+```
+
+<Callout type="info">
+For most deployments (Vercel, Netlify, custom domains), keep this as `"/"`.
+</Callout>
+
+### language
+
+**Type:** `string`
+**Default:** `"en"`
+
+The primary language of your documentation. Used in the HTML `lang` attribute.
+
+```json
+{
+  "site": {
+    "language": "en"
+  }
+}
+```
+
+Common values: `en`, `es`, `fr`, `de`, `ja`, `zh`, `pt`, `ru`
+
+### organizationName
+
+**Type:** `string`
+
+Your company or organization name. Used in footer and metadata.
+
+```json
+{
+  "site": {
+    "organizationName": "Acme Corporation"
+  }
+}
+```
+
+### projectName
+
+**Type:** `string`
+
+The name of your project or product. Used in metadata and can be referenced in content.
+
+```json
+{
+  "site": {
+    "projectName": "specra"
+  }
+}
+```
+
+### activeVersion
+
+**Type:** `string`
+**Default:** First version found in `docs/` folder
+
+Which documentation version to show by default.
+
+```json
+{
+  "site": {
+    "activeVersion": "v2.0.0"
+  }
+}
+```
+
+Users can switch versions using the version dropdown, but this sets the default.
+
+### logo
+
+**Type:** `string` or `object`
+
+Path to your logo image. Can be a single logo or separate logos for light and dark modes.
+
+**Single logo:**
+```json
+{
+  "site": {
+    "logo": "/logo.svg"
+  }
+}
+```
+
+**Separate logos for themes:**
+```json
+{
+  "site": {
+    "logo": {
+      "light": "/logo-light.svg",
+      "dark": "/logo-dark.svg"
+    }
+  }
+}
+```
+
+**Best practices:**
+- Use SVG for crisp rendering at any size
+- Keep dimensions around 150px wide × 40px tall
+- Optimize files (use SVGO or similar)
+- Place in `public/` folder
+
+### favicon
+
+**Type:** `string`
+
+Path to your favicon. Appears in browser tabs and bookmarks.
+
+```json
+{
+  "site": {
+    "favicon": "/favicon.ico"
+  }
+}
+```
+
+**Recommended setup:**
+```
+public/
+├── favicon.ico          # 32×32 ICO for older browsers
+├── favicon-16x16.png    # 16×16 PNG
+├── favicon-32x32.png    # 32×32 PNG
+└── apple-touch-icon.png # 180×180 PNG for iOS
+```
+
+Then reference the main one:
+```json
+{
+  "site": {
+    "favicon": "/favicon-32x32.png"
+  }
+}
+```
+
+### hideTitle
+
+**Type:** `boolean`
+**Default:** `false`
+
+Hide the site title in the header navigation.
+
+```json
+{
+  "site": {
+    "hideTitle": true
+  }
+}
+```
+
+Useful when your logo includes text and you don't want the title duplicated.
+
+### hideLogo
+
+**Type:** `boolean`
+**Default:** `false`
+
+Hide the logo in the header navigation.
+
+```json
+{
+  "site": {
+    "hideLogo": true
+  }
+}
+```
+
+Use this if you only want to show the text title without a logo.
+
+## Examples
+
+### Minimal Setup
+
+Perfect for getting started:
+
+```json
+{
+  "site": {
+    "title": "My Docs",
+    "description": "Documentation for my project"
+  }
+}
+```
+
+### Open Source Project
+
+For an open source project on GitHub:
+
+```json
+{
+  "site": {
+    "title": "MyLib Documentation",
+    "description": "A powerful library for building awesome things",
+    "url": "https://mylib.dev",
+    "organizationName": "MyLib Contributors",
+    "projectName": "mylib",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.ico"
+  }
+}
+```
+
+### Company Product
+
+For a commercial product:
+
+```json
+{
+  "site": {
+    "title": "Acme API Docs",
+    "description": "Complete API reference and guides for Acme Platform",
+    "url": "https://docs.acme.com",
+    "organizationName": "Acme Corporation",
+    "projectName": "acme-platform",
+    "activeVersion": "v2.0.0",
+    "logo": {
+      "light": "/acme-logo-light.svg",
+      "dark": "/acme-logo-dark.svg"
+    },
+    "favicon": "/favicon-32x32.png"
+  }
+}
+```
+
+### Multi-Language Site
+
+For documentation in multiple languages:
+
+```json
+{
+  "site": {
+    "title": "Documentation",
+    "language": "es",
+    "url": "https://docs.example.com/es",
+    "logo": "/logo.svg"
+  }
+}
+```
+
+## Common Patterns
+
+### GitHub Pages Setup
+
+For GitHub Pages without custom domain:
+
+```json
+{
+  "site": {
+    "title": "My Docs",
+    "url": "https://username.github.io/repo-name",
+    "baseUrl": "/repo-name/"
+  }
+}
+```
+
+### Logo Best Practices
+
+**For light mode background:**
+Use a dark logo or logo with color
+
+**For dark mode background:**
+Use a light/white logo or invert colors
+
+**Example setup:**
+```json
+{
+  "site": {
+    "logo": {
+      "light": "/logo-dark.svg",
+      "dark": "/logo-white.svg"
+    }
+  }
+}
+```
+
+## Validation
+
+Specra validates your site configuration on startup. Common errors:
+
+**Missing title:**
+```
+❌ Error: site.title is required
+```
+
+**Invalid URL:**
+```
+❌ Error: site.url must be a valid URL (include https://)
+```
+
+**Logo file not found:**
+```
+⚠️ Warning: Logo file not found at /logo.svg
+```
+
+## Environment Variables
+
+Use environment variables for different environments:
+
+```json
+{
+  "site": {
+    "url": "${SITE_URL}",
+    "logo": "${LOGO_PATH}"
+  }
+}
+```
+
+Then set them:
+```bash
+# .env.local
+SITE_URL=https://docs.example.com
+LOGO_PATH=/logo.svg
+```
+
+## Next Steps
+
+<CardGrid cols={2}>
+  <Card
+    icon="layout"
+    title="Navigation"
+    description="Configure sidebar, breadcrumbs, and tab groups"
+    href="/docs/v1.0.0/configuration/navigation"
+  />
+  <Card
+    icon="rocket"
+    title="Deployment"
+    description="Set up deployment configuration"
+    href="/docs/v1.0.0/configuration/deployment-config"
+  />
+  <Card
+    icon="sliders"
+    title="Advanced"
+    description="Analytics, search, and more"
+    href="/docs/v1.0.0/configuration/advanced"
+  />
+  <Card
+    icon="arrow-left"
+    title="Overview"
+    description="Back to configuration overview"
+    href="/docs/v1.0.0/configuration/overview"
+  />
+</CardGrid>

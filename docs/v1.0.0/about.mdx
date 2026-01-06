@@ -2,56 +2,108 @@
 title: About Specra
 sidebar_position: 1
 icon: info
+tab_group: guides
 ---
 
-Specra is a self-hosted, Mintlify-quality documentation platform built with **Next.js**, **MDX**, and **Tailwind CSS**. It provides a polished, readable docs experience with powerful features for both readers and writers.
+# What is Specra?
 
-## Why Specra?
+Specra is a modern documentation framework that makes writing and publishing technical documentation actually enjoyable. Built on top of Next.js, MDX, and Tailwind CSS, it gives you the polished look and feel of premium documentation platforms like Mintlify, but you host it yourself.
+
+If you've ever struggled with clunky documentation tools or paid way too much for hosted solutions, Specra is here to change that. Write your docs in Markdown, add interactive components when you need them, and deploy anywhere you want.
+
+## Why We Built Specra
+
+Documentation shouldn't be hard. You should be able to focus on writing great content, not wrestling with configuration files or fighting against your tools. Here's what we believe:
+
+**Content comes first.** Drop your MDX files into a folder, and Specra handles the rest. No manual routing, no navigation setup, no build configuration headaches.
+
+**Developer experience matters.** Hot reload means you see changes instantly. TypeScript keeps you safe. The component library is there when you need it, invisible when you don't.
+
+**Performance is non-negotiable.** Pre-rendered pages, edge caching, optimized images. Your docs load fast, always.
+
+**Flexibility over lock-in.** Deploy to Vercel, GitHub Pages, Netlify, or anywhere that runs Node.js or serves static files. You own your content and your infrastructure.
+
+## Key Features
 
 <CardGrid cols={2}>
-  <Card icon="zap" title="Fast & Static" description="Pre-rendered pages with edge caching for lightning-fast load times" />
-  <Card icon="search" title="Instant Search" description="Meilisearch-powered full-text search with typo tolerance" />
-  <Card icon="git-branch" title="Versioned Docs" description="Multiple documentation versions under /docs/v1.0.0/, /docs/v2.0.0/" />
-  <Card icon="palette" title="Theme Support" description="Dark mode, customizable colors, and design tokens" />
+  <Card icon="zap" title="Lightning Fast" description="Static site generation with edge caching. Your docs load in milliseconds, not seconds." />
+  <Card icon="search" title="Powerful Search" description="MeiliSearch integration gives you typo-tolerant, instant search that actually works." />
+  <Card icon="git-branch" title="Version Management" description="Ship multiple doc versions side by side. Perfect for APIs and libraries with breaking changes." />
+  <Card icon="palette" title="Beautiful Theming" description="Dark mode out of the box. Customize colors, fonts, and styles to match your brand." />
+  <Card icon="code" title="MDX Components" description="Use Markdown for content, React components for interactivity. Best of both worlds." />
+  <Card icon="layout" title="Smart Navigation" description="Auto-generated sidebar from your file structure. Collapsible sections, breadcrumbs, table of contents." />
 </CardGrid>
 
-## Built With
+## The Stack
 
-- **Next.js 16** - React framework with App Router
-- **MDX** - Markdown with React components
-- **Tailwind CSS** - Utility-first styling
-- **Meilisearch** - Fast, typo-tolerant search
-- **TypeScript** - Full type safety
+We built Specra on proven, modern technologies:
 
-## Core Principles
+- **Next.js 15+** with the App Router for optimal performance and developer experience
+- **MDX** so you can write Markdown with React components mixed in
+- **Tailwind CSS** for styling that's both powerful and maintainable
+- **MeiliSearch** for search that's fast and forgiving of typos
+- **TypeScript** because type safety saves time and sanity
+
+## What You Get
+
+When you use Specra, you get a complete documentation system:
+
+**Rich Content Components**
+Callouts, tabs, code blocks with syntax highlighting, cards, accordions, steps, diagrams with Mermaid, math equations with KaTeX, and more.
+
+**Automatic Navigation**
+Your folder structure becomes your sidebar. Add a `_category_.json` file to customize sections. That's it.
+
+**Smart Features**
+Reading time estimates, last updated timestamps, tag support, breadcrumbs, responsive table of contents with scroll tracking.
+
+**API Documentation**
+Generate beautiful API references from OpenAPI specs, Postman collections, or Specra's own format. Interactive playground included.
+
+**Multi-Version Support**
+Maintain docs for v1, v2, v3 simultaneously. Version switcher lets users jump between them instantly.
+
+**Search That Works**
+Full-text search with keyboard shortcuts (⌘K or Ctrl+K). Works offline with local search or scales up with MeiliSearch.
+
+**Theme System**
+Respects system preferences, supports manual dark/light toggle, customizable via CSS variables.
+
+**Production Ready**
+SEO optimization, accessibility baked in, security headers, performance monitoring, CI/CD examples.
+
+## How It Works
+
+Specra follows a simple philosophy: you write, we handle the rest.
 
 <Steps>
-  <Step title="Content First">
-    Your documentation lives in the `docs/` folder as MDX files. The system handles routing, navigation, and rendering automatically.
+  <Step title="Write in MDX">
+    Create `.mdx` files in your `docs/` folder. Use frontmatter for metadata. Write Markdown for content. Mix in React components when needed.
   </Step>
-  
-  <Step title="Developer Experience">
-    Edit MDX files, and see changes instantly with hot reload. No complex configuration required.
+
+  <Step title="Auto-Generation">
+    Specra scans your files, generates navigation, extracts headings for the table of contents, and sets up routing automatically.
   </Step>
-  
-  <Step title="Production Ready">
-    Built-in SEO, accessibility, performance optimization, and CI/CD integration.
+
+  <Step title="Instant Preview">
+    Run the dev server and see changes live as you type. Hot reload keeps you in flow.
+  </Step>
+
+  <Step title="Deploy Anywhere">
+    Build for Node.js hosting (Vercel, Railway) or export as static files (GitHub Pages, Netlify, Cloudflare Pages). One codebase, multiple deployment targets.
   </Step>
 </Steps>
 
-## What's Included
+## Who Should Use Specra?
 
-| Feature | Description |
-|---------|-------------|
-| **MDX Components** | Callouts, tabs, code blocks, cards, accordions, and more |
-| **Sidebar Navigation** | Auto-generated from folder structure with collapsible groups |
-| **Table of Contents** | Auto-generated from headings with scroll tracking |
-| **Version Switcher** | Switch between documentation versions |
-| **Search** | Full-text search with keyboard shortcuts (⌘K) |
-| **Dark Mode** | System-aware theme with manual toggle |
-| **Reading Time** | Automatic reading time estimation |
-| **Responsive** | Mobile-first design that works on all devices |
+Specra is perfect for:
 
-## Getting Started
+- **Open source maintainers** who need professional docs without the hosting fees
+- **Startups** that want great documentation without enterprise pricing
+- **API developers** who need versioned docs and interactive API references
+- **Technical writers** who prefer Markdown over WYSIWYG editors
+- **Teams** that want docs living in the same repo as their code
 
-Ready to write documentation? Head to the [Getting Started](/docs/v1.0.0/getting-started) guide.
+## Ready to Start?
+
+Jump into the [Getting Started](/docs/v1.0.0/getting-started) guide and have your first documentation site running in under 5 minutes.

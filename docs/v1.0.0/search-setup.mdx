@@ -1,0 +1,460 @@
+---
+title: Search Setup
+description: Configure MeiliSearch for powerful, typo-tolerant search in your documentation
+sidebar_position: 4
+icon: search
+tab_group: guides
+---
+
+# Setting Up Search
+
+Specra supports powerful full-text search through MeiliSearch integration. This guide shows you how to set up and configure search for your documentation.
+
+## Search Options
+
+Specra offers two search solutions:
+
+**Local Search** (Default)
+- Works out of the box
+- No external dependencies
+- Good for small to medium doc sites
+- Searches in the browser
+
+**MeiliSearch** (Recommended for production)
+- Blazing fast search engine
+- Typo tolerance
+- Instant results
+- Better for large doc sites
+- Requires separate server
+
+## Quick Start with MeiliSearch
+
+### Prerequisites
+
+- Docker (easiest setup) or ability to run a MeiliSearch server
+- Your documentation site already set up with Specra
+
+### Installation
+
+<Steps>
+  <Step title="Run MeiliSearch with Docker">
+    The easiest way to get MeiliSearch running locally:
+
+```bash
+docker run -d \
+  --name meilisearch \
+  -p 7700:7700 \
+  -e MEILI_MASTER_KEY="aSampleMasterKey" \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest
+```
+
+This starts MeiliSearch on `http://localhost:7700` with a master key for authentication.
+
+<Callout type="warning">
+  Use a strong master key in production! This example key is for development only.
+</Callout>
+  </Step>
+
+  <Step title="Configure Specra">
+    Update your `specra.config.json`:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "provider": "meilisearch",
+    "placeholder": "Search documentation...",
+    "meilisearch": {
+      "host": "http://localhost:7700",
+      "apiKey": "aSampleMasterKey",
+      "indexName": "docs"
+    }
+  }
+}
+```
+  </Step>
+
+  <Step title="Index Your Content">
+    Specra includes indexing utilities. Run this from your project root:
+
+```bash
+npm run index:search
+```
+
+This scans your `docs/` folder and sends all content to MeiliSearch for indexing.
+
+<Callout type="info">
+  Re-run the indexing command whenever you add or update documentation.
+</Callout>
+  </Step>
+
+  <Step title="Test Search">
+    Start your dev server:
+
+```bash
+npm run dev
+```
+
+Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) to open the search modal. Start typing to see instant results!
+  </Step>
+</Steps>
+
+## MeiliSearch Configuration
+
+### Configuration Options
+
+All MeiliSearch settings go in `specra.config.json` under the `search` section:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "provider": "meilisearch",
+    "placeholder": "Search docs...",
+    "meilisearch": {
+      "host": "http://localhost:7700",
+      "apiKey": "your-api-key",
+      "indexName": "docs"
+    }
+  }
+}
+```
+
+**Field reference:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `enabled` | boolean | Enable/disable search feature |
+| `provider` | string | "meilisearch" or "local" |
+| `placeholder` | string | Placeholder text in search box |
+| `meilisearch.host` | string | MeiliSearch server URL |
+| `meilisearch.apiKey` | string | API key for authentication |
+| `meilisearch.indexName` | string | Index name for your docs |
+
+### Search Key vs Master Key
+
+MeiliSearch uses two types of keys:
+
+**Master Key** (development)
+- Full access to all operations
+- Used for indexing content
+- Never expose in client-side code in production
+
+**Search Key** (production)
+- Read-only access
+- Safe to use in browser
+- Generate from master key
+
+Generate a search key:
+
+```bash
+curl -X POST 'http://localhost:7700/keys' \
+  -H 'Authorization: Bearer aSampleMasterKey' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Search key for documentation",
+    "actions": ["search"],
+    "indexes": ["docs"],
+    "expiresAt": null
+  }'
+```
+
+Use the returned key in your production config.
+
+## Production Deployment
+
+### Hosting MeiliSearch
+
+For production, you need to host MeiliSearch separately from your docs. Options:
+
+**MeiliSearch Cloud** (Easiest)
+- Official managed hosting
+- Starts at $0.02/hour
+- Automatic backups and updates
+- Visit [meilisearch.com/cloud](https://www.meilisearch.com/cloud)
+
+**Self-hosted on VPS**
+- DigitalOcean, AWS, Google Cloud, etc.
+- More control, requires maintenance
+- Use Docker or binary installation
+
+**Railway / Render / Fly.io**
+- One-click deploy options available
+- Good for small to medium projects
+
+### Production Configuration
+
+Update `specra.config.json` for production:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "provider": "meilisearch",
+    "meilisearch": {
+      "host": "https://your-meilisearch-domain.com",
+      "apiKey": "your-public-search-key",
+      "indexName": "docs"
+    }
+  }
+}
+```
+
+<Callout type="warning">
+  Always use a search-only API key in production, never your master key!
+</Callout>
+
+### Indexing in CI/CD
+
+Automate indexing when you deploy. Example GitHub Action:
+
+```yaml
+name: Index Documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Index documentation
+        env:
+          MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
+          MEILISEARCH_API_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
+        run: npm run index:search
+```
+
+Store your MeiliSearch credentials as GitHub secrets.
+
+## Customizing Search Behavior
+
+### Search Settings
+
+Configure how MeiliSearch handles searches:
+
+```javascript
+// In your indexing script
+const settings = {
+  searchableAttributes: [
+    'title',
+    'description',
+    'content',
+    'headings'
+  ],
+  displayedAttributes: [
+    'title',
+    'description',
+    'url',
+    'breadcrumb'
+  ],
+  rankingRules: [
+    'words',
+    'typo',
+    'proximity',
+    'attribute',
+    'sort',
+    'exactness'
+  ],
+  stopWords: ['the', 'a', 'an'],
+  synonyms: {
+    'js': ['javascript'],
+    'ts': ['typescript']
+  }
+}
+```
+
+### Filters
+
+Add filters to narrow search results:
+
+```json
+{
+  "search": {
+    "meilisearch": {
+      "filters": "version = 'v1.0.0'"
+    }
+  }
+}
+```
+
+This only shows results from a specific version.
+
+## Local Search (Alternative)
+
+If you don't want to run MeiliSearch, use local search:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "provider": "local",
+    "placeholder": "Search documentation..."
+  }
+}
+```
+
+Local search:
+- ✅ Works immediately, no setup
+- ✅ No external dependencies
+- ✅ Free
+- ❌ Less powerful than MeiliSearch
+- ❌ No typo tolerance
+- ❌ Slower for large doc sites
+
+Local search is automatically built during `npm run build`.
+
+## Keyboard Shortcuts
+
+Users can trigger search with:
+
+- **⌘K** or **Ctrl+K** - Open search
+- **Escape** - Close search
+- **↑↓** - Navigate results
+- **Enter** - Go to selected result
+
+These work with both local and MeiliSearch options.
+
+## Troubleshooting
+
+### Search not appearing
+
+**Check configuration:**
+```json
+{
+  "search": {
+    "enabled": true  // ← Must be true
+  }
+}
+```
+
+**Verify MeiliSearch is running:**
+```bash
+curl http://localhost:7700/health
+```
+
+Should return `{"status":"available"}`.
+
+### No search results
+
+**Re-index your content:**
+```bash
+npm run index:search
+```
+
+**Check index exists:**
+```bash
+curl -X GET 'http://localhost:7700/indexes' \
+  -H 'Authorization: Bearer aSampleMasterKey'
+```
+
+### CORS errors
+
+If you get CORS errors in browser console, configure MeiliSearch to allow your domain:
+
+```bash
+docker run -d \
+  --name meilisearch \
+  -p 7700:7700 \
+  -e MEILI_MASTER_KEY="aSampleMasterKey" \
+  -e MEILI_HTTP_ADDR="0.0.0.0:7700" \
+  -e MEILI_NO_ANALYTICS=true \
+  getmeili/meilisearch:latest
+```
+
+Or set CORS headers in your reverse proxy.
+
+### Slow indexing
+
+For large doc sites (1000+ pages):
+
+- Index incrementally (only changed files)
+- Use batch requests
+- Increase MeiliSearch memory allocation
+- Run indexing in background jobs
+
+## Advanced Features
+
+### Multi-Language Search
+
+Configure language-specific stemming:
+
+```javascript
+const settings = {
+  searchableAttributes: ['title', 'content'],
+  attributesForFaceting: ['lang'],
+  // ... other settings
+}
+
+// Index with language tags
+{
+  title: "Getting Started",
+  content: "...",
+  lang: "en",
+  url: "/docs/en/getting-started"
+}
+```
+
+### Search Analytics
+
+Track what users search for:
+
+```javascript
+// In your search component
+const logSearch = async (query, resultsCount) => {
+  await fetch('/api/analytics/search', {
+    method: 'POST',
+    body: JSON.stringify({ query, resultsCount })
+  })
+}
+```
+
+Use this data to improve documentation based on what users look for.
+
+### Custom Result Rendering
+
+Override the search result component to customize how results appear:
+
+```tsx
+// components/custom-search-result.tsx
+export function CustomSearchResult({ hit }) {
+  return (
+    <div className="search-result">
+      <h3>{hit.title}</h3>
+      <p>{hit.description}</p>
+      <span className="version">{hit.version}</span>
+    </div>
+  )
+}
+```
+
+## Next Steps
+
+<CardGrid cols={2}>
+  <Card
+    icon="book"
+    title="Writing Content"
+    description="Learn how to write searchable documentation"
+    href="/docs/v1.0.0/guides/writing-content"
+  />
+  <Card
+    icon="settings"
+    title="Configuration"
+    description="Explore all configuration options"
+    href="/docs/v1.0.0/configuration/overview"
+  />
+</CardGrid>

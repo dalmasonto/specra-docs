@@ -1,0 +1,325 @@
+---
+title: Configuration Overview
+description: Complete guide to configuring your Specra documentation site
+sidebar_position: 1
+icon: settings
+tab_group: guides
+---
+
+# Configuration Overview
+
+Specra uses a single configuration file, `specra.config.json`, located at your project root. This file controls everything from site metadata to navigation, theming, and deployment settings.
+
+## Quick Start
+
+Here's a minimal configuration to get started:
+
+```json
+{
+  "site": {
+    "title": "My Documentation",
+    "description": "Documentation for my project",
+    "url": "https://docs.example.com"
+  }
+}
+```
+
+That's it! Specra fills in sensible defaults for everything else.
+
+## Configuration Structure
+
+The config file is organized into logical sections:
+
+<CardGrid cols={2}>
+  <Card
+    icon="globe"
+    title="Site Configuration"
+    description="Basic site metadata, branding, and URLs"
+    href="/docs/v1.0.0/configuration/site-config"
+  />
+  <Card
+    icon="layout"
+    title="Navigation"
+    description="Sidebar, breadcrumbs, table of contents, and tab groups"
+    href="/docs/v1.0.0/configuration/navigation"
+  />
+  <Card
+    icon="rocket"
+    title="Deployment"
+    description="Platform-specific deployment settings"
+    href="/docs/v1.0.0/configuration/deployment-config"
+  />
+  <Card
+    icon="sliders"
+    title="Advanced Options"
+    description="Analytics, search, features, and environment variables"
+    href="/docs/v1.0.0/configuration/advanced"
+  />
+</CardGrid>
+
+## Complete Example
+
+Here's a full configuration showing all available options:
+
+```json
+{
+  "$schema": "./node_modules/specra/config/specra.config.schema.json",
+  "site": {
+    "title": "My Docs",
+    "description": "Comprehensive documentation",
+    "url": "https://docs.example.com",
+    "baseUrl": "/",
+    "language": "en",
+    "organizationName": "My Company",
+    "projectName": "my-project",
+    "activeVersion": "v1.0.0",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.ico",
+    "hideTitle": false,
+    "hideLogo": false
+  },
+  "theme": {
+    "defaultMode": "system",
+    "respectPrefersColorScheme": true,
+    "primaryColor": "#3b82f6",
+    "customCss": "/custom.css"
+  },
+  "navigation": {
+    "showSidebar": true,
+    "collapsibleSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true,
+    "tocPosition": "right",
+    "tocMaxDepth": 3,
+    "tabGroups": [
+      {
+        "id": "guides",
+        "label": "Guides",
+        "icon": "book-open"
+      },
+      {
+        "id": "api",
+        "label": "API Reference",
+        "icon": "zap"
+      }
+    ]
+  },
+  "social": {
+    "github": "https://github.com/username/repo",
+    "twitter": "https://twitter.com/username",
+    "discord": "https://discord.gg/invite",
+    "linkedin": "https://linkedin.com/company/name",
+    "youtube": "https://youtube.com/@channel",
+    "custom": [
+      {
+        "label": "Website",
+        "url": "https://example.com",
+        "icon": "globe"
+      }
+    ]
+  },
+  "search": {
+    "enabled": true,
+    "placeholder": "Search documentation...",
+    "provider": "meilisearch",
+    "meilisearch": {
+      "host": "https://search.example.com",
+      "apiKey": "search-key",
+      "indexName": "docs"
+    }
+  },
+  "analytics": {
+    "googleAnalytics": "G-XXXXXXXXXX",
+    "googleTagManager": "GTM-XXXXXXX",
+    "plausible": "docs.example.com"
+  },
+  "footer": {
+    "copyright": "© 2024 My Company. All rights reserved.",
+    "customContent": "<p>Custom HTML here</p>",
+    "links": [
+      {
+        "title": "Product",
+        "items": [
+          { "label": "Features", "href": "/features" },
+          { "label": "Pricing", "href": "/pricing" }
+        ]
+      }
+    ],
+    "branding": {
+      "showBranding": true,
+      "logo": "/brand-logo.svg",
+      "title": "Powered by Specra",
+      "url": "https://specra.dev"
+    }
+  },
+  "banner": {
+    "enabled": true,
+    "message": "📢 Version 2.0 is coming soon!",
+    "type": "info",
+    "dismissible": true
+  },
+  "features": {
+    "editUrl": "https://github.com/username/repo/edit/main/docs",
+    "showLastUpdated": true,
+    "showReadingTime": true,
+    "showAuthors": false,
+    "showTags": true,
+    "versioning": true,
+    "i18n": false
+  },
+  "env": {
+    "API_BASE_URL": "https://api.example.com",
+    "API_VERSION": "v1",
+    "CDN_URL": "https://cdn.example.com"
+  },
+  "deployment": {
+    "target": "vercel",
+    "basePath": "",
+    "customDomain": false
+  }
+}
+```
+
+## TypeScript Support
+
+For TypeScript projects, you can use `.ts` or `.mts` config files:
+
+```typescript
+// specra.config.ts
+import type { SpecraConfig } from 'specra'
+
+const config: SpecraConfig = {
+  site: {
+    title: 'My Documentation',
+    description: 'Built with Specra',
+  },
+  // ... rest of config
+}
+
+export default config
+```
+
+## IDE Autocomplete
+
+The config file includes a `$schema` property that enables autocomplete in VS Code and other editors:
+
+```json
+{
+  "$schema": "./node_modules/specra/config/specra.config.schema.json",
+  "site": {
+    // Autocomplete works here!
+  }
+}
+```
+
+When you type, your editor will suggest available options and show descriptions.
+
+## Environment Variables
+
+You can use environment variables in your config:
+
+```json
+{
+  "search": {
+    "meilisearch": {
+      "host": "${MEILISEARCH_HOST}",
+      "apiKey": "${MEILISEARCH_API_KEY}"
+    }
+  }
+}
+```
+
+Then set them:
+
+```bash
+# .env.local
+MEILISEARCH_HOST=https://search.example.com
+MEILISEARCH_API_KEY=your-key
+```
+
+<Callout type="warning">
+Never commit sensitive API keys to version control. Use environment variables instead.
+</Callout>
+
+## Configuration Validation
+
+Specra validates your config on startup and shows helpful errors if something's wrong:
+
+```
+❌ Configuration error in specra.config.json:
+   - site.url must be a valid URL
+   - navigation.tocMaxDepth must be between 1 and 6
+```
+
+Fix the errors and restart your dev server.
+
+## Default Values
+
+If you omit optional fields, Specra uses these defaults:
+
+| Field | Default Value |
+|-------|---------------|
+| `site.baseUrl` | `"/"` |
+| `site.language` | `"en"` |
+| `theme.defaultMode` | `"system"` |
+| `theme.respectPrefersColorScheme` | `true` |
+| `navigation.showSidebar` | `true` |
+| `navigation.collapsibleSidebar` | `true` |
+| `navigation.showBreadcrumbs` | `true` |
+| `navigation.showTableOfContents` | `true` |
+| `navigation.tocPosition` | `"right"` |
+| `navigation.tocMaxDepth` | `3` |
+| `search.enabled` | `false` |
+| `features.showLastUpdated` | `true` |
+| `features.showReadingTime` | `true` |
+| `features.versioning` | `true` |
+| `deployment.target` | `"vercel"` |
+
+## Multiple Environments
+
+Create environment-specific configs:
+
+```txt
+├── specra.config.json          # Base config
+├── specra.config.development.json
+├── specra.config.staging.json
+└── specra.config.production.json
+```
+
+Load the right one based on `NODE_ENV`:
+
+```javascript
+// Load config based on environment
+const config = require(`./specra.config.${process.env.NODE_ENV}.json`)
+```
+
+## Next Steps
+
+Dive into specific configuration sections:
+
+<CardGrid cols={2}>
+  <Card
+    icon="globe"
+    title="Site Configuration"
+    description="Configure site metadata and branding"
+    href="/docs/v1.0.0/configuration/site-config"
+  />
+  <Card
+    icon="layout"
+    title="Navigation"
+    description="Set up navigation and tab groups"
+    href="/docs/v1.0.0/configuration/navigation"
+  />
+  <Card
+    icon="rocket"
+    title="Deployment"
+    description="Configure deployment settings"
+    href="/docs/v1.0.0/configuration/deployment-config"
+  />
+  <Card
+    icon="sliders"
+    title="Advanced"
+    description="Analytics, search, and more"
+    href="/docs/v1.0.0/configuration/advanced"
+  />
+</CardGrid>

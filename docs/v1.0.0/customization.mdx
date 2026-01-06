@@ -1,0 +1,677 @@
+---
+title: Theming & Customization
+description: Customize colors, fonts, layouts, and styles to match your brand
+sidebar_position: 5
+icon: palette
+tab_group: guides
+---
+
+# Theming & Customization
+
+Make Specra your own. This guide covers everything from simple color changes to complete custom styling.
+
+## Quick Customization
+
+The fastest way to customize your docs is through `specra.config.json`.
+
+### Brand Colors
+
+Set your primary color to match your brand:
+
+```json
+{
+  "theme": {
+    "primaryColor": "#3b82f6"
+  }
+}
+```
+
+Specra automatically generates all color variations (hover states, focus rings, etc.) from this single value.
+
+### Dark Mode Settings
+
+Control how dark mode works:
+
+```json
+{
+  "theme": {
+    "defaultMode": "system",
+    "respectPrefersColorScheme": true
+  }
+}
+```
+
+**Options for `defaultMode`:**
+- `"system"` - Respect user's OS preference (recommended)
+- `"light"` - Always start in light mode
+- `"dark"` - Always start in dark mode
+
+Set `respectPrefersColorScheme` to `false` to ignore OS settings and only use your default.
+
+### Logos
+
+Add your logo for light and dark modes:
+
+```json
+{
+  "site": {
+    "logo": {
+      "light": "/logo-light.svg",
+      "dark": "/logo-dark.svg"
+    }
+  }
+}
+```
+
+Or use a single logo for both:
+
+```json
+{
+  "site": {
+    "logo": "/logo.svg"
+  }
+}
+```
+
+Place logo files in the `public/` directory.
+
+## Custom CSS
+
+For deeper customization, add custom CSS.
+
+### Method 1: Custom CSS File
+
+Create a CSS file and reference it in config:
+
+**1. Create `/public/custom.css`:**
+
+```css
+:root {
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --border-radius: 12px;
+}
+
+.doc-content h1 {
+  font-size: 3rem;
+  color: var(--color-primary);
+}
+
+.sidebar {
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+}
+```
+
+**2. Reference in config:**
+
+```json
+{
+  "theme": {
+    "customCss": "/custom.css"
+  }
+}
+```
+
+### Method 2: Global Styles
+
+Edit `app/globals.css` directly for more control:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Your custom properties */
+    --radius: 0.75rem;
+  }
+}
+
+@layer components {
+  /* Your custom component styles */
+  .custom-card {
+    @apply rounded-lg border border-gray-200 p-4;
+  }
+}
+```
+
+## CSS Variables Reference
+
+Specra uses CSS variables for theming. Override these to customize appearance:
+
+### Colors
+
+```css
+:root {
+  /* Primary brand color */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #dbeafe;
+
+  /* Background colors */
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+
+  /* Text colors */
+  --color-text: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+
+  /* Border colors */
+  --color-border: #e5e7eb;
+  --color-border-hover: #d1d5db;
+
+  /* Code block colors */
+  --color-code-bg: #f3f4f6;
+  --color-code-text: #1f2937;
+}
+
+.dark {
+  --color-bg: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-bg-tertiary: #374151;
+
+  --color-text: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #9ca3af;
+
+  --color-border: #374151;
+  --color-border-hover: #4b5563;
+
+  --color-code-bg: #1f2937;
+  --color-code-text: #f9fafb;
+}
+```
+
+### Typography
+
+```css
+:root {
+  /* Font families */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-heading: var(--font-sans);
+
+  /* Font sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+}
+```
+
+### Spacing
+
+```css
+:root {
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+```
+
+## Custom Fonts
+
+### Using Google Fonts
+
+**1. Add font to your layout:**
+
+```tsx
+// app/layout.tsx
+import { Inter, JetBrains_Mono } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'] })
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${inter.className}`}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+**2. Update CSS variables:**
+
+```css
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+```
+
+### Using Local Fonts
+
+Place font files in `public/fonts/` and load them:
+
+```css
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/fonts/custom-font.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: 'CustomFont', system-ui, sans-serif;
+}
+```
+
+## Layout Customization
+
+### Sidebar Width
+
+Adjust sidebar width in your custom CSS:
+
+```css
+.sidebar {
+  width: 280px; /* Default is 260px */
+}
+
+@media (min-width: 1280px) {
+  .sidebar {
+    width: 320px;
+  }
+}
+```
+
+### Content Width
+
+Change maximum content width:
+
+```css
+.doc-content {
+  max-width: 850px; /* Default is 800px */
+}
+```
+
+### Table of Contents Position
+
+Control TOC position via config:
+
+```json
+{
+  "navigation": {
+    "tocPosition": "right",
+    "showTableOfContents": true
+  }
+}
+```
+
+Options: `"left"` or `"right"`
+
+## Component Styling
+
+### Callout Styles
+
+Customize callout appearance:
+
+```css
+.callout {
+  border-left-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+}
+
+.callout-info {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e3a8a;
+}
+
+.callout-warning {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.dark .callout-info {
+  background: #1e3a8a;
+  color: #dbeafe;
+}
+```
+
+### Code Block Styling
+
+Customize syntax highlighting:
+
+```css
+.code-block {
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.code-block-title {
+  background: #374151;
+  color: #f9fafb;
+  font-family: var(--font-mono);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+```
+
+### Card Styling
+
+Style card components:
+
+```css
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+```
+
+## Tailwind Configuration
+
+Extend Tailwind for custom utilities:
+
+```typescript
+// tailwind.config.ts
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './docs/**/*.{md,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+    },
+  },
+  plugins: [],
+}
+
+export default config
+```
+
+Use custom utilities in your CSS or MDX:
+
+```mdx
+<div className="bg-brand-50 dark:bg-brand-900 rounded-4xl p-6">
+  Custom styled content
+</div>
+```
+
+## Navigation Customization
+
+### Top Navigation Links
+
+Add custom navigation links:
+
+```json
+{
+  "navigation": {
+    "links": [
+      { "label": "Home", "href": "/" },
+      { "label": "Docs", "href": "/docs" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "GitHub", "href": "https://github.com/..." }
+    ]
+  }
+}
+```
+
+### Social Links
+
+Display social icons in header:
+
+```json
+{
+  "social": {
+    "github": "https://github.com/yourusername",
+    "twitter": "https://twitter.com/yourusername",
+    "discord": "https://discord.gg/invite",
+    "custom": [
+      {
+        "label": "YouTube",
+        "url": "https://youtube.com/@channel",
+        "icon": "youtube"
+      }
+    ]
+  }
+}
+```
+
+## Footer Customization
+
+Customize footer content and links:
+
+```json
+{
+  "footer": {
+    "copyright": "© 2024 Your Company. All rights reserved.",
+    "links": [
+      {
+        "title": "Product",
+        "items": [
+          { "label": "Features", "href": "/features" },
+          { "label": "Pricing", "href": "/pricing" }
+        ]
+      },
+      {
+        "title": "Resources",
+        "items": [
+          { "label": "Documentation", "href": "/docs" },
+          { "label": "API Reference", "href": "/api" }
+        ]
+      }
+    ],
+    "branding": {
+      "showBranding": true,
+      "logo": "/footer-logo.svg",
+      "title": "Your Brand",
+      "url": "https://yoursite.com"
+    }
+  }
+}
+```
+
+## Advanced Customization
+
+### Custom Components
+
+Create custom MDX components:
+
+```tsx
+// components/custom/feature-grid.tsx
+interface FeatureGridProps {
+  children: React.ReactNode
+}
+
+export function FeatureGrid({ children }: FeatureGridProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {children}
+    </div>
+  )
+}
+```
+
+Use in MDX:
+
+```mdx
+import { FeatureGrid } from '@/components/custom/feature-grid'
+
+<FeatureGrid>
+  <Card title="Feature 1" />
+  <Card title="Feature 2" />
+  <Card title="Feature 3" />
+</FeatureGrid>
+```
+
+### Custom Layout
+
+Override the default doc layout:
+
+```tsx
+// app/docs/[...slug]/layout.tsx
+import { CustomDocLayout } from '@/components/layouts/custom-doc-layout'
+
+export default function DocsLayout({ children }) {
+  return <CustomDocLayout>{children}</CustomDocLayout>
+}
+```
+
+### Custom Search UI
+
+Replace the default search component:
+
+```tsx
+// components/search/custom-search.tsx
+export function CustomSearch() {
+  return (
+    <div className="search-container">
+      {/* Your custom search implementation */}
+    </div>
+  )
+}
+```
+
+## Examples
+
+### Minimal Clean Theme
+
+```css
+:root {
+  --color-primary: #000000;
+  --radius: 0.25rem;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.doc-content {
+  max-width: 700px;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.sidebar {
+  border-right: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+```
+
+### Vibrant Modern Theme
+
+```css
+:root {
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --radius-lg: 1.5rem;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+}
+
+.card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.callout {
+  background: linear-gradient(to right, #fef3c7, #fed7aa);
+  border: 2px solid #f59e0b;
+}
+```
+
+### Dark-First Theme
+
+```css
+:root {
+  --color-bg: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-text: #fafafa;
+  --color-border: #262626;
+  --color-primary: #10b981;
+}
+
+.sidebar {
+  background: #0a0a0a;
+  border-right: 1px solid #262626;
+}
+
+.doc-content {
+  color: #d4d4d4;
+}
+
+code {
+  background: #1a1a1a;
+  color: #10b981;
+}
+```
+
+## Best Practices
+
+**Start small.** Begin with config-based customization before writing custom CSS.
+
+**Use CSS variables.** They make theme switching and maintenance easier.
+
+**Test dark mode.** Always test your customizations in both light and dark modes.
+
+**Keep it accessible.** Ensure sufficient color contrast (4.5:1 for body text, 3:1 for large text).
+
+**Optimize fonts.** Use font-display: swap and subset fonts to improve load times.
+
+**Mobile first.** Test your customizations on mobile devices.
+
+## Next Steps
+
+<CardGrid cols={2}>
+  <Card
+    icon="code"
+    title="Components"
+    description="Build custom MDX components"
+    href="/docs/v1.0.0/components"
+  />
+  <Card
+    icon="settings"
+    title="Configuration"
+    description="Full configuration reference"
+    href="/docs/v1.0.0/configuration/overview"
+  />
+</CardGrid>

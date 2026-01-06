@@ -1,0 +1,498 @@
+---
+title: Navigation Configuration
+description: Configure sidebar, breadcrumbs, table of contents, and tab groups
+sidebar_position: 3
+icon: layout
+tab_group: guides
+---
+
+# Navigation Configuration
+
+The `navigation` section controls how users move through your documentation. Configure the sidebar, breadcrumbs, table of contents, and tab groups to create an intuitive navigation experience.
+
+## Basic Configuration
+
+Here's a minimal navigation setup:
+
+```json
+{
+  "navigation": {
+    "showSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true
+  }
+}
+```
+
+Specra provides sensible defaults, so you only need to configure what you want to change.
+
+## Complete Configuration
+
+```json
+{
+  "navigation": {
+    "showSidebar": true,
+    "collapsibleSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true,
+    "tocPosition": "right",
+    "tocMaxDepth": 3,
+    "tabGroups": [
+      {
+        "id": "guides",
+        "label": "Guides",
+        "icon": "book-open"
+      },
+      {
+        "id": "api",
+        "label": "API Reference",
+        "icon": "zap"
+      },
+      {
+        "id": "components",
+        "label": "Components",
+        "icon": "layers"
+      }
+    ]
+  }
+}
+```
+
+## Sidebar Configuration
+
+### showSidebar
+
+**Type:** `boolean`
+**Default:** `true`
+
+Show or hide the sidebar navigation.
+
+```json
+{
+  "navigation": {
+    "showSidebar": true
+  }
+}
+```
+
+Set to `false` to hide the sidebar completely. Useful for landing pages or marketing sites.
+
+### collapsibleSidebar
+
+**Type:** `boolean`
+**Default:** `true`
+
+Allow users to collapse and expand sidebar sections.
+
+```json
+{
+  "navigation": {
+    "collapsibleSidebar": true
+  }
+}
+```
+
+When `true`, folder sections have collapse/expand arrows. When `false`, all sections are always expanded.
+
+## Breadcrumbs
+
+### showBreadcrumbs
+
+**Type:** `boolean`
+**Default:** `true`
+
+Display breadcrumb navigation at the top of each page.
+
+```json
+{
+  "navigation": {
+    "showBreadcrumbs": true
+  }
+}
+```
+
+Breadcrumbs show the page's location in the documentation hierarchy:
+
+```
+Home > Guides > Getting Started
+```
+
+<Callout type="tip">
+Breadcrumbs help users understand where they are and navigate back to parent sections.
+</Callout>
+
+## Table of Contents
+
+### showTableOfContents
+
+**Type:** `boolean`
+**Default:** `true`
+
+Display the table of contents (TOC) on documentation pages.
+
+```json
+{
+  "navigation": {
+    "showTableOfContents": true
+  }
+}
+```
+
+The TOC shows all headings on the current page with links to scroll to each section.
+
+### tocPosition
+
+**Type:** `"left"` or `"right"`
+**Default:** `"right"`
+
+Position the table of contents on the left or right side of the page.
+
+```json
+{
+  "navigation": {
+    "tocPosition": "right"
+  }
+}
+```
+
+**Right position (default):**
+- TOC appears in the right sidebar
+- Traditional documentation layout
+- More reading space for content
+
+**Left position:**
+- TOC appears in the left sidebar below main navigation
+- Compact layout
+- Less horizontal scrolling on smaller screens
+
+### tocMaxDepth
+
+**Type:** `number` (1-6)
+**Default:** `3`
+
+Maximum heading level to show in the table of contents.
+
+```json
+{
+  "navigation": {
+    "tocMaxDepth": 3
+  }
+}
+```
+
+**Options:**
+- `1` - Only H1 headings
+- `2` - H1 and H2 headings
+- `3` - H1, H2, and H3 headings (recommended)
+- `4` - Up to H4
+- `5` - Up to H5
+- `6` - All headings
+
+<Callout type="warning">
+Setting this too high (5 or 6) can make the TOC cluttered. Most docs work best with 2 or 3.
+</Callout>
+
+## Tab Groups
+
+Tab groups organize your documentation into logical sections with separate navigation tabs.
+
+### Basic Tab Groups
+
+```json
+{
+  "navigation": {
+    "tabGroups": [
+      {
+        "id": "guides",
+        "label": "Guides",
+        "icon": "book-open"
+      },
+      {
+        "id": "api",
+        "label": "API Reference",
+        "icon": "zap"
+      }
+    ]
+  }
+}
+```
+
+### Tab Group Properties
+
+Each tab group has three properties:
+
+**id** (required)
+- Unique identifier for the tab group
+- Used in page frontmatter: `tab_group: "guides"`
+- Lowercase, no spaces
+
+**label** (required)
+- Display name shown in the tab
+- Can include spaces and capitalization
+
+**icon** (optional)
+- Lucide icon name to display next to label
+- Makes tabs more visual and scannable
+
+### Assigning Pages to Tab Groups
+
+In your MDX frontmatter, specify which tab group a page belongs to:
+
+```mdx
+---
+title: Getting Started
+tab_group: guides
+---
+```
+
+Pages with the same `tab_group` value appear together under that tab.
+
+### Common Tab Group Setups
+
+**Documentation + API:**
+```json
+{
+  "tabGroups": [
+    {
+      "id": "docs",
+      "label": "Documentation",
+      "icon": "book"
+    },
+    {
+      "id": "api",
+      "label": "API Reference",
+      "icon": "code"
+    }
+  ]
+}
+```
+
+**Guides + Components + API:**
+```json
+{
+  "tabGroups": [
+    {
+      "id": "guides",
+      "label": "Guides",
+      "icon": "book-open"
+    },
+    {
+      "id": "components",
+      "label": "Components",
+      "icon": "layers"
+    },
+    {
+      "id": "api",
+      "label": "API",
+      "icon": "zap"
+    }
+  ]
+}
+```
+
+**Multi-product documentation:**
+```json
+{
+  "tabGroups": [
+    {
+      "id": "platform",
+      "label": "Platform",
+      "icon": "box"
+    },
+    {
+      "id": "mobile",
+      "label": "Mobile SDK",
+      "icon": "smartphone"
+    },
+    {
+      "id": "web",
+      "label": "Web SDK",
+      "icon": "monitor"
+    }
+  ]
+}
+```
+
+## Available Icons
+
+Specra uses Lucide icons. Popular choices for documentation:
+
+**General:**
+- `book` - Books, documentation
+- `book-open` - Open book, reading
+- `file-text` - Documents, pages
+- `layout` - Layout, structure
+
+**Technical:**
+- `code` - Code, programming
+- `zap` - API, fast, dynamic
+- `terminal` - CLI, command line
+- `database` - Database, data
+
+**UI:**
+- `layers` - Components, stack
+- `palette` - Design, theming
+- `settings` - Configuration
+- `grid` - Layout grid
+
+**Actions:**
+- `rocket` - Launch, deployment
+- `wrench` - Tools, utilities
+- `shield` - Security
+- `search` - Search, find
+
+Browse all icons at [lucide.dev](https://lucide.dev/icons/)
+
+## Sidebar Organization
+
+### Automatic Generation
+
+Specra automatically generates your sidebar from your file structure:
+
+```txt
+docs/v1.0.0/
+├── getting-started.mdx        → Getting Started
+├── installation.mdx           → Installation
+└── guides/                    → Guides (folder)
+    ├── basics.mdx            →   Basics
+    └── advanced.mdx          →   Advanced
+```
+
+### Controlling Order
+
+Use `sidebar_position` in frontmatter to control page order:
+
+```mdx
+---
+title: Getting Started
+sidebar_position: 1
+---
+```
+
+Lower numbers appear first. Pages without positions are sorted alphabetically.
+
+### Category Configuration
+
+Customize folder appearance with `_category_.json`:
+
+```json
+{
+  "label": "User Guides",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "icon": "book-open"
+}
+```
+
+See [Writing Content](/docs/v1.0.0/writing-content) for more on organizing content.
+
+## Examples
+
+### Minimal Setup
+
+Just enable the basics:
+
+```json
+{
+  "navigation": {
+    "showSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true
+  }
+}
+```
+
+### Clean Layout
+
+TOC on left, deeper headings:
+
+```json
+{
+  "navigation": {
+    "showSidebar": true,
+    "collapsibleSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true,
+    "tocPosition": "left",
+    "tocMaxDepth": 4
+  }
+}
+```
+
+### Multi-Section Documentation
+
+With tab groups for different audiences:
+
+```json
+{
+  "navigation": {
+    "showSidebar": true,
+    "collapsibleSidebar": true,
+    "showBreadcrumbs": true,
+    "showTableOfContents": true,
+    "tocPosition": "right",
+    "tocMaxDepth": 3,
+    "tabGroups": [
+      {
+        "id": "getting-started",
+        "label": "Getting Started",
+        "icon": "rocket"
+      },
+      {
+        "id": "developers",
+        "label": "Developers",
+        "icon": "code"
+      },
+      {
+        "id": "designers",
+        "label": "Designers",
+        "icon": "palette"
+      }
+    ]
+  }
+}
+```
+
+## Best Practices
+
+**Use tab groups wisely** - Don't create too many. 3-5 tabs maximum works best.
+
+**Choose descriptive labels** - Make it obvious what's in each tab or section.
+
+**Pick appropriate icons** - Icons should reinforce the tab's purpose.
+
+**Set tocMaxDepth appropriately** - Most docs work best with 2 or 3 levels.
+
+**Keep sidebar collapsible** - Let users hide sections they don't need.
+
+**Show breadcrumbs** - They help users navigate complex documentation.
+
+## Next Steps
+
+<CardGrid cols={2}>
+  <Card
+    icon="globe"
+    title="Site Configuration"
+    description="Configure site metadata and branding"
+    href="/docs/v1.0.0/configuration/site-config"
+  />
+  <Card
+    icon="rocket"
+    title="Deployment Config"
+    description="Set up deployment settings"
+    href="/docs/v1.0.0/configuration/deployment-config"
+  />
+  <Card
+    icon="sliders"
+    title="Advanced Configuration"
+    description="Analytics, search, features, and more"
+    href="/docs/v1.0.0/configuration/advanced"
+  />
+  <Card
+    icon="arrow-left"
+    title="Configuration Overview"
+    description="Back to configuration overview"
+    href="/docs/v1.0.0/configuration/overview"
+  />
+</CardGrid>

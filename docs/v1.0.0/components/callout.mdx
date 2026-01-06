@@ -2,82 +2,311 @@
 title: Callout
 description: Highlight important information with styled callout boxes
 sidebar_position: 4
+icon: alert-circle
+tab_group: components
 ---
 
-Callouts draw attention to important information within your content. They're styled based on the type of message they convey.
+# Callout
 
-## Usage
+Callouts draw attention to important information in your documentation. They come in different styles to convey different types of messages, from helpful tips to critical warnings.
 
+## Basic Usage
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+<Callout type="info">
+  This is helpful information for the reader.
+</Callout>
+  </Tab>
+  <Tab label="Code">
 ```mdx
 <Callout type="info">
   This is helpful information for the reader.
 </Callout>
 ```
+  </Tab>
+</Tabs>
 
-## Types
+## Callout Types
+
+Specra includes seven callout types, each with distinct styling:
 
 ### Info
-<Callout type="info">
-  This provides additional context or helpful tips.
-</Callout>
 
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+<Callout type="info">
+  Provides additional context or helpful information that enhances understanding.
+</Callout>
+  </Tab>
+  <Tab label="Code">
 ```mdx
 <Callout type="info">
-  Helpful additional context goes here.
+  Provides additional context or helpful information.
 </Callout>
 ```
+  </Tab>
+</Tabs>
 
 ### Note
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="note">
-  Notes highlight important information the reader should be aware of.
+  Highlights important details the reader should be aware of.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="note">
+  Highlights important details the reader should be aware of.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ### Tip
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="tip">
-  Tips provide suggestions for better usage or best practices.
+  Offers suggestions for better usage or best practices.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="tip">
+  Offers suggestions for better usage or best practices.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ### Warning
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="warning">
-  Warnings alert users to potential issues or breaking changes.
+  Alerts users to potential issues or breaking changes.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="warning">
+  Alerts users to potential issues or breaking changes.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ### Success
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="success">
-  Success callouts confirm positive outcomes or completed actions.
+  Confirms positive outcomes or successfully completed actions.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="success">
+  Confirms positive outcomes or successfully completed actions.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ### Error
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="error">
-  Error callouts highlight critical issues or things to avoid.
+  Highlights critical issues or things users should avoid.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="error">
+  Highlights critical issues or things users should avoid.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ### Danger
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
 <Callout type="danger">
-  Danger callouts warn about potentially destructive actions.
+  Warns about potentially destructive or irreversible actions.
 </Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="danger">
+  Warns about potentially destructive or irreversible actions.
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | required | Callout content |
-| `type` | `"info" \| "note" \| "tip" \| "warning" \| "success" \| "error" \| "danger"` | `"info"` | Callout style |
+| `type` | `string` | `"info"` | Callout style: `info`, `note`, `tip`, `warning`, `success`, `error`, or `danger` |
+| `children` | `ReactNode` | Required | The content inside the callout |
+
+## Advanced Examples
+
+### Multi-Line Content
+
+Callouts can contain any MDX content, including formatted text, lists, and code:
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+<Callout type="warning">
+  **Important considerations before deploying:**
+
+  - Back up your database
+  - Test in staging environment first
+  - Notify your team about downtime
+
+  Run `npm run db:backup` to create a backup.
+</Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="warning">
+  **Important considerations before deploying:**
+
+  - Back up your database
+  - Test in staging environment first
+  - Notify your team about downtime
+
+  Run `npm run db:backup` to create a backup.
+</Callout>
+```
+  </Tab>
+</Tabs>
+
+### Nested Components
+
+You can nest other components inside callouts:
+
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+<Callout type="info">
+  **Pro tip:** Use code blocks to show examples
+
+  <Tabs defaultValue="js">
+    <Tab label="JavaScript">
+      console.log("Hello!")
+    </Tab>
+    <Tab label="Python">
+      print("Hello!")
+    </Tab>
+  </Tabs>
+</Callout>
+  </Tab>
+  <Tab label="Code">
+```mdx
+<Callout type="info">
+  **Pro tip:** Use code blocks to show examples
+
+  <Tabs defaultValue="js">
+    <Tab label="JavaScript">
+      console.log("Hello!")
+    </Tab>
+    <Tab label="Python">
+      print("Hello!")
+    </Tab>
+  </Tabs>
+</Callout>
+```
+  </Tab>
+</Tabs>
 
 ## GitHub-Style Alerts
 
-You can also use markdown blockquotes with alert markers:
+Prefer Markdown syntax? Specra also supports GitHub-style alert syntax using blockquotes:
 
-```mdx
-> [!INFO]
-> This is an info alert using markdown syntax.
+<Tabs defaultValue="Preview">
+  <Tab label="Preview">
+> [!NOTE]
+> This is a note using GitHub-style syntax.
+
+> [!TIP]
+> This is a tip using blockquote syntax.
 
 > [!WARNING]
-> This is a warning using markdown syntax.
+> This is a warning alert.
+  </Tab>
+  <Tab label="Code">
+```markdown
+> [!NOTE]
+> This is a note using GitHub-style syntax.
+
+> [!TIP]
+> This is a tip using blockquote syntax.
+
+> [!WARNING]
+> This is a warning alert.
 ```
+  </Tab>
+</Tabs>
 
-> [!INFO]
-> This is an info alert using markdown syntax.
+**Supported alert types:**
+- `[!NOTE]` - Same as type="note"
+- `[!TIP]` - Same as type="tip"
+- `[!IMPORTANT]` - Same as type="warning"
+- `[!WARNING]` - Same as type="warning"
+- `[!CAUTION]` - Same as type="danger"
 
-> [!WARNING]
-> This is a warning alert using markdown syntax.
+## When to Use Each Type
+
+**Info** - Additional context that enhances understanding
+- "You can also achieve this using the CLI"
+- "This feature is available in v2.0 and later"
+
+**Note** - Important information that shouldn't be skipped
+- "This setting affects all users in your organization"
+- "Changes take effect after server restart"
+
+**Tip** - Best practices and helpful suggestions
+- "For better performance, enable caching"
+- "Use TypeScript for better autocomplete"
+
+**Warning** - Potential problems or breaking changes
+- "This will modify your database schema"
+- "Deprecated in v3.0, use newMethod() instead"
+
+**Success** - Positive confirmations
+- "Setup complete! Your site is ready"
+- "All tests passed successfully"
+
+**Error** - Critical issues to avoid
+- "Do not expose your API key in client code"
+- "This operation cannot be undone"
+
+**Danger** - Destructive or irreversible actions
+- "This will permanently delete all data"
+- "Proceeding will revoke all access tokens"
+
+## Accessibility
+
+Callouts are semantic and accessible:
+
+- Uses appropriate ARIA roles
+- Screen reader friendly
+- Keyboard navigable
+- Color contrast compliant (WCAG AA)
+- Icons are decorative with proper alt text
+
+## Related Components
+
+<CardGrid cols={3}>
+  <Card icon="square" title="Card" href="/docs/v1.0.0/components/card" />
+  <Card icon="message-square" title="Badge" href="/docs/v1.0.0/components/badge" />
+  <Card icon="layers" title="Accordion" href="/docs/v1.0.0/components/accordion" />
+</CardGrid>

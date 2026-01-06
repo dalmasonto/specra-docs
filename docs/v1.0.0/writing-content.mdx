@@ -1,0 +1,598 @@
+---
+title: Writing Content
+description: Master MDX authoring, content organization, and best practices
+sidebar_position: 3
+icon: pen-tool
+tab_group: guides
+---
+
+# Writing Content in Specra
+
+Specra uses MDX (Markdown + JSX) for documentation, giving you the simplicity of Markdown with the power of React components. This guide covers everything you need to write great documentation.
+
+## MDX Basics
+
+MDX files look like regular Markdown but let you use React components anywhere in your content.
+
+### Standard Markdown
+
+All standard Markdown syntax works as expected:
+
+**Headings:**
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+```
+
+**Text formatting:**
+```markdown
+**Bold text**
+*Italic text*
+~~Strikethrough~~
+`Inline code`
+```
+
+**Lists:**
+```markdown
+- Unordered list
+- Another item
+  - Nested item
+
+1. Ordered list
+2. Second item
+   1. Nested ordered item
+```
+
+**Links and images:**
+```markdown
+[Link text](https://example.com)
+![Alt text](/images/photo.png)
+```
+
+**Code blocks:**
+````markdown
+```javascript
+function hello() {
+  console.log("Hello, world!")
+}
+```
+````
+
+**Tables:**
+```markdown
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| More     | Info     | Here     |
+```
+
+**Blockquotes:**
+```markdown
+> This is a quote.
+> It can span multiple lines.
+```
+
+**Horizontal rules:**
+```markdown
+---
+```
+
+## Using Components
+
+Components are used with JSX syntax directly in your MDX:
+
+```mdx
+<Callout type="info">
+  This is a callout component!
+</Callout>
+```
+
+All components are automatically available - no imports needed.
+
+### Component Examples
+
+**Alert readers to important information:**
+```mdx
+<Callout type="warning">
+  Make sure to backup your data before proceeding.
+</Callout>
+```
+
+**Create tabbed content:**
+```mdx
+<Tabs defaultValue="option1">
+  <Tab label="Option 1">
+    Content for the first tab
+  </Tab>
+  <Tab label="Option 2">
+    Content for the second tab
+  </Tab>
+</Tabs>
+```
+
+**Guide users through steps:**
+```mdx
+<Steps>
+  <Step title="Install dependencies">
+    Run `npm install` to get started.
+  </Step>
+  <Step title="Configure your app">
+    Edit the config file with your settings.
+  </Step>
+</Steps>
+```
+
+See the [Components](/docs/v1.0.0/components) section for all available components.
+
+## Content Organization
+
+### File Structure Best Practices
+
+Organize files logically to make content easy to find:
+
+```txt
+docs/v1.0.0/
+├── getting-started.mdx         # Top level: essential pages
+├── installation.mdx
+├── guides/                     # Group related content
+│   ├── _category_.json
+│   ├── basics.mdx
+│   ├── advanced.mdx
+│   └── examples/              # Further nesting for sub-topics
+│       ├── _category_.json
+│       ├── example-1.mdx
+│       └── example-2.mdx
+└── api/
+    ├── _category_.json
+    └── reference.mdx
+```
+
+**Tips:**
+- Keep the top level for critical pages users need first
+- Use folders to group related content
+- Limit nesting to 2-3 levels max
+- Name files descriptively (`authentication.mdx` not `auth.mdx`)
+
+### Controlling Page Order
+
+Use `sidebar_position` in frontmatter to control ordering:
+
+```mdx
+---
+title: Installation
+sidebar_position: 1
+---
+```
+
+Lower numbers appear first. Pages without a position are sorted alphabetically.
+
+For folders, use `_category_.json`:
+
+```json
+{
+  "label": "Getting Started",
+  "position": 1
+}
+```
+
+## Writing Style Tips
+
+Good documentation is clear, concise, and helpful. Here are some tips:
+
+### Be Clear and Direct
+
+**Good:**
+> Click the "Save" button to save your changes.
+
+**Bad:**
+> You might want to consider clicking on the button labeled "Save" if you would like to persist your modifications to storage.
+
+### Use Active Voice
+
+**Good:**
+> The system validates your input.
+
+**Bad:**
+> Your input is validated by the system.
+
+### Show, Don't Just Tell
+
+Include examples with every concept:
+
+```mdx
+## Using Environment Variables
+
+Access environment variables in your config:
+
+```json
+{
+  "env": {
+    "API_URL": "https://api.example.com"
+  }
+}
+```
+
+Then reference them in your MDX:
+
+```mdx
+The API is available at {process.env.API_URL}
+```
+```
+
+### Break Up Long Content
+
+Use headings, lists, callouts, and components to create visual breaks:
+
+```mdx
+## Configuration Options
+
+There are several ways to configure authentication:
+
+### API Keys
+
+API keys are simple but less secure.
+
+<Callout type="warning">
+  Never commit API keys to version control.
+</Callout>
+
+### OAuth 2.0
+
+OAuth provides better security for user-facing apps.
+
+<Steps>
+  <Step title="Register your app">
+    Create an app in the provider dashboard.
+  </Step>
+  <Step title="Configure callback URL">
+    Set your redirect URI in the app settings.
+  </Step>
+</Steps>
+```
+
+## Working with Images
+
+### Adding Images
+
+Place images in the `public/` folder:
+
+```txt
+public/
+├── images/
+│   ├── screenshot.png
+│   └── diagram.svg
+```
+
+Reference them in MDX:
+
+```mdx
+![Dashboard screenshot](/images/screenshot.png)
+```
+
+### Image Best Practices
+
+**Use descriptive alt text:**
+```mdx
+![Login form showing email and password fields](/images/login.png)
+```
+
+**Optimize image sizes:**
+- Use WebP format when possible
+- Compress images before adding to repo
+- Keep images under 500KB
+
+**Use the Image component for advanced features:**
+```mdx
+<Image
+  src="/images/hero.png"
+  alt="Hero image"
+  caption="The main dashboard view"
+  width={800}
+  height={400}
+/>
+```
+
+## Code Examples
+
+### Syntax Highlighting
+
+Specify the language after the opening backticks:
+
+````markdown
+```javascript
+const greeting = "Hello, world!"
+console.log(greeting)
+```
+
+```python
+def greet():
+    print("Hello, world!")
+```
+
+```bash
+npm install specra
+```
+````
+
+Supported languages include: javascript, typescript, python, bash, json, yaml, markdown, html, css, and many more.
+
+### Highlighting Lines
+
+Highlight specific lines to draw attention:
+
+````markdown
+```javascript {2,4-6}
+function calculateTotal(items) {
+  const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+  const tax = subtotal * 0.1
+  const shipping = 5.99
+  const total = subtotal + tax + shipping
+  return total
+}
+```
+````
+
+### File Names
+
+Show which file the code belongs to:
+
+````markdown
+```javascript title="src/utils.js"
+export function formatDate(date) {
+  return date.toLocaleDateString()
+}
+```
+````
+
+### Use the CodeBlock Component
+
+For more control:
+
+```mdx
+<CodeBlock
+  language="javascript"
+  title="src/app.js"
+  highlightLines={[3, 5]}
+  showLineNumbers={true}
+>
+{`function app() {
+  const config = loadConfig()
+  const server = createServer(config)
+  server.listen(3000)
+  console.log("Server running")
+}`}
+</CodeBlock>
+```
+
+## Links and Navigation
+
+### Internal Links
+
+Link to other pages in your docs:
+
+```mdx
+See the [Configuration guide](/docs/v1.0.0/configuration/overview) for details.
+```
+
+Use relative paths from the site root, including the version.
+
+### External Links
+
+External links open in a new tab automatically:
+
+```mdx
+Check out the [Next.js documentation](https://nextjs.org/docs).
+```
+
+### Anchor Links
+
+Link to headings on the same page:
+
+```mdx
+Jump to [Installation](#installation) below.
+```
+
+Heading anchors are auto-generated from the heading text in lowercase with hyphens.
+
+## Frontmatter Reference
+
+Every MDX file needs frontmatter. Here's a complete example:
+
+```mdx
+---
+title: Advanced Topics
+description: Deep dive into advanced Specra features
+sidebar_position: 10
+tab_group: guides
+icon: zap
+tags: [advanced, configuration, optimization]
+draft: false
+---
+
+# Your content starts here
+```
+
+**Required fields:**
+- `title`: Page title
+
+**Recommended fields:**
+- `description`: SEO description (150-160 characters)
+
+**Optional fields:**
+- `sidebar_position`: Number for sidebar ordering
+- `tab_group`: Assign to a tab group
+- `icon`: Lucide icon name
+- `tags`: Array of tags
+- `draft`: Hide in production if true
+
+## Advanced MDX Features
+
+### Importing Components
+
+While built-in components work automatically, you can import custom ones:
+
+```mdx
+import { MyCustomComponent } from '@/components/custom'
+
+<MyCustomComponent data="example" />
+```
+
+### Using JavaScript Expressions
+
+Embed JavaScript expressions:
+
+```mdx
+The current year is {new Date().getFullYear()}.
+```
+
+### Conditional Content
+
+Use JavaScript for conditional rendering:
+
+```mdx
+{process.env.NODE_ENV === 'development' && (
+  <Callout type="info">
+    You're viewing the development version.
+  </Callout>
+)}
+```
+
+## Version Management
+
+When you need multiple doc versions:
+
+```txt
+docs/
+├── v1.0.0/
+│   └── getting-started.mdx
+├── v2.0.0/
+│   └── getting-started.mdx
+└── next/
+    └── getting-started.mdx
+```
+
+Set the active version in `specra.config.json`:
+
+```json
+{
+  "site": {
+    "activeVersion": "v2.0.0"
+  }
+}
+```
+
+Users can switch versions with the version dropdown in the UI.
+
+## SEO Best Practices
+
+### Page Titles and Descriptions
+
+Always include both in frontmatter:
+
+```mdx
+---
+title: Getting Started with Specra
+description: Learn how to install and configure Specra for your documentation needs
+---
+```
+
+### Descriptive Headings
+
+Use clear, descriptive headings that include keywords:
+
+**Good:**
+```markdown
+## Installing Specra with npm
+```
+
+**Bad:**
+```markdown
+## Installation
+```
+
+### Structured Content
+
+Use proper heading hierarchy (h1 → h2 → h3). Never skip levels.
+
+## Common Patterns
+
+### Prerequisites Section
+
+Start tutorials with prerequisites:
+
+```mdx
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- Node.js 18 or higher
+- A text editor
+- Basic knowledge of Markdown
+```
+
+### Step-by-Step Tutorials
+
+Use the Steps component:
+
+```mdx
+<Steps>
+  <Step title="Install the package">
+    Run npm install specra
+  </Step>
+  <Step title="Configure">
+    Create a specra.config.json file
+  </Step>
+  <Step title="Start the server">
+    Run npm run dev
+  </Step>
+</Steps>
+```
+
+### Code with Explanation
+
+Pair code examples with explanations:
+
+```mdx
+Configure your site title and description:
+
+```json
+{
+  "site": {
+    "title": "My Docs",
+    "description": "Documentation for my project"
+  }
+}
+```
+
+The `title` appears in the browser tab and navigation. The `description` is used for SEO meta tags.
+```
+
+### Quick Reference Cards
+
+Use CardGrid for scannable reference sections:
+
+```mdx
+<CardGrid cols={3}>
+  <Card icon="terminal" title="CLI" description="Command line tools" href="/cli" />
+  <Card icon="book" title="Guides" description="Step-by-step tutorials" href="/guides" />
+  <Card icon="code" title="API" description="API reference docs" href="/api" />
+</CardGrid>
+```
+
+## Next Steps
+
+<CardGrid cols={2}>
+  <Card
+    icon="palette"
+    title="Components"
+    description="Explore all available MDX components"
+    href="/docs/v1.0.0/components"
+  />
+  <Card
+    icon="settings"
+    title="Configuration"
+    description="Customize your documentation site"
+    href="/docs/v1.0.0/configuration/overview"
+  />
+</CardGrid>
