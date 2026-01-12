@@ -1,0 +1,249 @@
+# Specra Docs - AI-Friendly Documentation
+
+## Project Overview
+specra-docs is the official documentation website for Specra. It serves as both comprehensive documentation for users and a reference implementation demonstrating Specra's capabilities.
+
+## Key Information
+- Project Name: specra-docs
+- Type: Documentation Website / Next.js Application
+- Purpose: Document Specra framework and demonstrate its features
+- URL: https://specra.vercel.app
+- Repository: https://github.com/dalmasonto/specra-docs
+- Built With: Specra (dogfooding)
+
+## Core Purpose
+1. **Documentation**: Comprehensive guides, API references, and tutorials for Specra
+2. **Reference Implementation**: Real-world example of Specra in production
+3. **Showcase**: Demonstrates all Specra features and capabilities
+4. **Onboarding**: Helps new users learn and adopt Specra
+
+## Technology Stack
+- Next.js 16.1.0 (App Router)
+- React 19.2.3
+- Specra 0.1.7 (the SDK this project documents)
+- Tailwind CSS 4.1.9
+- TypeScript 5
+- Deployed on Vercel
+
+## Project Structure
+```
+specra-docs/
+├── app/
+│   ├── layout.tsx         # Root layout (uses specra)
+│   ├── page.tsx           # Landing page
+│   ├── globals.css        # Global styles
+│   ├── not-found.tsx      # 404 page
+│   ├── api/              # API routes
+│   └── docs/             # Documentation routes
+│       └── [version]/
+│           └── [...slug]/
+│               └── page.tsx
+├── docs/                  # MDX documentation content
+│   └── v1.0.0/
+│       ├── getting-started/
+│       ├── configuration/
+│       ├── components/
+│       ├── api/
+│       └── guides/
+├── public/                # Static assets
+│   ├── logo.svg
+│   └── images/
+├── scripts/              # Build and utility scripts
+│   ├── generate-redirects.mjs
+│   ├── generate-static-redirects.mjs
+│   ├── index-search.ts
+│   └── test-search.ts
+├── specra.config.json    # Specra configuration
+├── next.config.mjs       # Next.js configuration
+├── tailwind.config.ts    # Tailwind configuration
+└── package.json
+```
+
+## Key Features
+- Comprehensive Specra documentation
+- Multi-version documentation support (v1.0.0)
+- Tab groups for organized navigation (Guides, API Reference, Components)
+- Dark mode support
+- Responsive design
+- Custom landing page
+- Search functionality (MeiliSearch, currently disabled)
+- Social links (GitHub, Twitter, Discord)
+- Custom footer with links
+
+## Documentation Content Structure
+```
+docs/v1.0.0/
+├── getting-started/      # Quick start guides
+├── installation/         # Installation instructions
+├── configuration/        # Configuration options
+├── components/          # Component documentation
+├── api/                 # API reference
+├── guides/              # How-to guides
+└── examples/           # Usage examples
+```
+
+## Configuration Highlights (specra.config.json)
+- Site: Specra Docs at https://specra.vercel.app
+- Theme: System-based (light/dark)
+- Navigation: Sidebar, breadcrumbs, TOC enabled
+- Tab Groups: 3 groups (Guides, API Reference, Components)
+- Social: GitHub, Twitter, Discord links
+- Search: MeiliSearch integration (disabled in current config)
+- Footer: Custom links and branding
+
+## Build Scripts
+- `dev`: Development server (next dev)
+- `build`: Production build with default config
+- `build:export`: Static export build for GitHub Pages
+- `start`: Production server
+- `lint`: ESLint
+- `generate:redirects`: Generate redirect rules
+- `generate:static-redirects`: Generate static redirects for export
+- `index:search`: Index content in MeiliSearch
+- `test:search`: Test search functionality
+
+## Deployment Options
+1. **Vercel (Default)**: `npm run build` - Server-side rendering
+2. **GitHub Pages**: `npm run build:export` - Static site export
+3. **Netlify**: Compatible with standard build
+4. **Self-hosted**: Any Node.js hosting
+
+## Static Export Configuration
+For GitHub Pages deployment:
+- Uses `NEXT_PUBLIC_BASE_PATH` environment variable
+- Generates static HTML files
+- Creates redirect files for routing
+- Supports custom domain or subdirectory hosting
+
+## Relationship to Other Projects
+- **specra-sdk**: This project uses specra as a dependency to build itself
+- **specra-cli**: Documented here as a tool users can use
+- **Flow**: SDK provides functionality → Docs explain how to use it → CLI helps users start
+
+**Circular Relationship**:
+- Specra SDK enables documentation sites
+- This site documents the SDK
+- The site is built with the SDK it documents (dogfooding)
+
+## Key Pages
+1. **Landing Page** (app/page.tsx): Custom hero and features showcase
+2. **Documentation** (docs/v1.0.0/*): All MDX content
+3. **404 Page** (app/not-found.tsx): Custom not found page
+
+## Scripts Overview
+
+### generate-redirects.mjs
+Generates redirect rules for proper routing during build.
+
+### generate-static-redirects.mjs
+Creates static redirect files for exported sites (GitHub Pages).
+
+### index-search.ts
+Indexes MDX content into MeiliSearch for search functionality.
+
+### test-search.ts
+Tests search indexing and queries.
+
+## Development Workflow
+```bash
+# Install dependencies
+npm install
+
+# Start development
+npm run dev
+
+# Open http://localhost:3000
+
+# Build for production
+npm run build
+
+# Test production build
+npm start
+```
+
+## Content Authoring
+Documentation is written in MDX format:
+```mdx
+---
+title: Page Title
+description: Page description
+tabGroup: guides
+---
+
+# Page Heading
+
+Content with **Markdown** and <ReactComponents />
+```
+
+## Search Integration
+MeiliSearch configuration (currently disabled):
+- Host: http://localhost:7700
+- API Key: aSampleMasterKey
+- Index Name: docs
+
+To enable:
+1. Set `search.enabled: true` in specra.config.json
+2. Run MeiliSearch instance
+3. Run `npm run index:search` to index content
+4. Search UI automatically appears
+
+## Social Integration
+- GitHub: https://github.com/dalmasonto/specra-docs
+- Twitter: https://twitter.com/dalmasonto
+- Discord: Community invite link
+- Custom: Website link to craftfolio
+
+## Analytics
+Supports:
+- Google Analytics (configurable)
+- Plausible (configurable)
+
+Currently empty in config, ready for integration.
+
+## Customization
+This site demonstrates how to:
+- Customize landing page (app/page.tsx)
+- Configure Specra (specra.config.json)
+- Organize documentation (docs/ structure)
+- Add tab groups for navigation
+- Integrate social links
+- Set up footer with custom links
+- Support multiple deployment targets
+
+## Use Cases
+1. **Learning Specra**: Follow guides to understand features
+2. **API Reference**: Look up configuration options and components
+3. **Troubleshooting**: Find solutions to common problems
+4. **Best Practices**: Learn recommended patterns
+5. **Examples**: See working code snippets
+6. **Reference Implementation**: Study how a real Specra site is built
+
+## Development Dependencies
+- @tailwindcss/postcss: PostCSS plugin
+- @tailwindcss/typography: Typography utilities
+- tsx: TypeScript execution for scripts
+- TypeScript types for Node, React
+
+## Deployment Status
+- Production: https://specra.vercel.app
+- Platform: Vercel
+- Auto-deploy: On push to main branch
+- Status: Live and active
+
+## Why This Exists
+1. **Self-Documentation**: Shows Specra users what they're learning
+2. **Proof of Concept**: Demonstrates that Specra works in production
+3. **Living Example**: Code can be inspected and learned from
+4. **Quality Assurance**: Using Specra to document Specra catches bugs early
+
+## Authors
+dalmasonto, arthur-kamau
+
+## Integration Points
+- Uses specra SDK as primary dependency
+- References create-specra CLI for user onboarding
+- Deployed on Vercel for automatic CI/CD
+- Open source for community contributions
+
+## Key Insight
+This project is both the product manual AND a working model built with the product itself - the ultimate form of dogfooding that validates Specra's capabilities.

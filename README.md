@@ -2,6 +2,8 @@
 
 **Specra** is a modern documentation framework built on Next.js that makes it easy to create beautiful, fast, and searchable documentation sites. With built-in support for MDX, versioning, API documentation generation, and customizable themes, Specra helps you focus on writing great docs.
 
+The docs can be found here https://specra.vercel.app/
+
 ## Quick Start
 
 ### Create a New Documentation Site
@@ -135,7 +137,7 @@ npm run start
 
 ## Deployment
 
-Deploy your Specra documentation site to Vercel, Netlify, GitHub Pages, or any hosting platform that supports Next.js.
+Deploy your Specra documentation site to Vercel, Netlify, GitHub Pages, or any hosting platform that supports Next.js/static pages.
 
 ### Vercel
 
