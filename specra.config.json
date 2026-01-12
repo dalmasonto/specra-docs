@@ -3,7 +3,7 @@
   "site": {
     "title": "Specra Docs",
     "description": "Comprehensive documentation for your project",
-    "url": "https://vercel.com/dalmasontos-projects/v0-documentation-library",
+    "url": "https://specra.vercel.app",
     "baseUrl": "/",
     "language": "en",
     "organizationName": "dalmasonto",
@@ -41,7 +41,7 @@
     ]
   },
   "social": {
-    "github": "https://github.com/dalmasonto",
+    "github": "https://github.com/dalmasonto/specra-docs",
     "twitter": "https://twitter.com/dalmasonto",
     "discord": "https://discord.com/invite/dalmasonto",
     "custom": [
@@ -66,7 +66,7 @@
     "plausible": ""
   },
   "footer": {
-    "copyright": "Copyright © 2024 Specra. All rights reserved.",
+    "copyright": "Copyright © 2026 Specra. All rights reserved.",
     "links": [
       {
         "title": "Documentation",
@@ -86,7 +86,7 @@
         "items": [
           {
             "label": "GitHub",
-            "href": "https://github.com/yourusername/your-repo"
+            "href": "https://github.com/dalmasonto/specra-docs"
           },
           {
             "label": "Discord",
@@ -103,13 +103,13 @@
     }
   },
   "banner": {
-    "enabled": false,
-    "message": "🎉 This is a development version. Some features may not work as expected.",
+    "enabled": true,
+    "message": "🎉 This is a development version. Some features may not work as expected. Please open issues on Github.",
     "type": "error",
     "dismissible": true
   },
   "features": {
-    "editUrl": "https://github.com/yourusername/your-repo/edit/main/docs",
+    "editUrl": "https://github.com/dalmasonto/specra-docs/edit/main/docs",
     "showLastUpdated": true,
     "showReadingTime": true,
     "showAuthors": false,
