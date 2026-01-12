@@ -123,8 +123,8 @@
     "CDN_URL": "https://cdn.example.com"
   },
   "deployment": {
-    "target": "vercel",
-    "basePath": "",
+    "target": "github-pages",
+    "basePath": "specra-docs",
     "customDomain": false
   }
 }

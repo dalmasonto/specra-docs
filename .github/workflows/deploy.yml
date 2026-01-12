@@ -84,7 +84,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out  # Next.js static export outputs to 'out' directory
           publish_branch: gh-pages  # Deploy to gh-pages branch
-          cname: aqua-protocol.org  # Custom domain (remove if not using custom domain)
+          # cname: specra.doc  # Custom domain (remove if not using custom domain)
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'Deploy Next.js documentation [skip ci]'
@@ -92,5 +92,5 @@ jobs:
       - name: Deployment summary
         run: |
           echo "✓ Documentation deployed to GitHub Pages"
-          echo "View at: https://aqua-protocol.org"
+          echo "View at: https://specra.doc"
           echo "Or: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
