@@ -124,7 +124,7 @@
   },
   "deployment": {
     "target": "github-pages",
-    "basePath": "/specra-docs",
+    "basePath": "specra-docs",
     "customDomain": false
   }
 }
